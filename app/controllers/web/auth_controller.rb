@@ -33,7 +33,7 @@ module Web
     end
 
     def auth_params
-      @auth_info_params ||= begin
+      @auth_params ||= begin
         params = request.env['omniauth.auth'].info.merge request.env['omniauth.auth'].credentials
         params[:image_url] = params.delete :image
         ActionController::Parameters.new(params).permit(
