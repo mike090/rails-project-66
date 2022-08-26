@@ -1,0 +1,3 @@
+= simple_form_for @repository do |f|
+  = f.input :github_id, collection: repository_select_options, error: false
+  = f.button :submit, class: 'btn-primary'

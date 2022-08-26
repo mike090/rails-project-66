@@ -2,6 +2,8 @@
 
 module Web
   class HomeController < ApplicationController
-    def index; end
+    def index
+      redirect_to repositories_path if current_user.is_a? User
+    end
   end
 end

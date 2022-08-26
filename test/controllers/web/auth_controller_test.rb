@@ -31,4 +31,26 @@ class Web::AuthControllerTest < ActionDispatch::IntegrationTest
     assert user
     assert signed_in?
   end
+
+  test 'test user login' do
+    user = users(:one)
+    auth_hash = {
+      provider: 'github',
+      uid: '12345',
+      info: {
+        email: user.email,
+        name: 'User Name',
+        nickname: user.nickname,
+        image: 'image_url'
+      },
+      credentials: {
+        token: 'token'
+      }
+    }
+    OmniAuth.config.mock_auth[:github] = OmniAuth::AuthHash::InfoHash.new(auth_hash)
+    get callback_auth_url('github')
+    assert_response :redirect
+    assert signed_in?
+    assert { current_user == user }
+  end
 end

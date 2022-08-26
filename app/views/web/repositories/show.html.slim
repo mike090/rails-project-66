@@ -1,0 +1,41 @@
+- content_for :caption, @repository.full_name
+
+= link_to t('.check'), '#', method: :post, class: 'btn btn-primary mb-4'
+p
+  strong.me-2 = t('.name')
+  = @repository.full_name
+p
+  strong.me-2 = t('.language')
+  = @repository.language
+p
+  strong.me-2 = t('.created_at')
+  = l(@repository.created_at, format: :long)
+p
+  strong.me-2 = t('.updated_at')
+  = l(@repository.updated_at, format: :long)
+hr
+table.table.table-striped
+  thead
+    tr
+      th scope='col'
+        = '#'
+      th scope='col'
+        = t('.state')
+      th scope='col'
+        = t('.reference')
+      th scope='col'
+        = t('.check_state')
+      th scope='col'
+        = t('.created_at')
+  tbody
+    tr
+      td scope='row'
+        = link_to '427', '#'
+      td scope='row'
+        = 'finished'
+      td scope='row'
+        = link_to 'c49fa22', '#'
+      td scope='row'
+        = 'false'
+      td scope='row'
+        = '24 Aug 13:53'

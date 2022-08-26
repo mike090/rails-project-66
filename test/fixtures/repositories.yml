@@ -1,0 +1,16 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: ruby_repo
+  full_name: one/ruby_repo
+  language: Ruby
+  check_state: false
+  user: one
+  github_id: 111111
+
+two:
+  name: repo_1
+  full_name: two/repo_1
+  language: JavaScript
+  check_state: false
+  user: two

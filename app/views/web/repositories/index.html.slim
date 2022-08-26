@@ -1,0 +1,21 @@
+- content_for :caption, t('repositories')
+
+= link_to t('.new'), new_repository_path, class: 'btn btn-primary'
+table.table.table-striped.table-hover.mt-4
+  thead
+    tr
+      th scope='col'
+        = t('.name')
+      th scope='col'
+        = t('.language')
+      th scope='col'
+        = t('.check_state')
+  tbody
+    - @repositories.each do |repository|
+      tr
+        td
+          = link_to repository.full_name, repository
+        td
+          = repository.language
+        td
+          = repository.check_state

@@ -3,20 +3,23 @@
 ENV['RAILS_ENV'] ||= 'test'
 require_relative '../config/environment'
 require 'rails/test_help'
+require 'webmock/minitest'
 
 OmniAuth.config.test_mode = true
 
 class ActiveSupport::TestCase
   # Run tests in parallel with specified workers
-  parallelize(workers: :number_of_processors)
+  # parallelize(workers: :number_of_processors)
 
   # Setup all fixtures in test/fixtures/*.yml for all tests in alphabetical order.
   fixtures :all
 
   # Add more helper methods to be used by all tests here...
-end
 
-class ActionDispatch::IntegrationTest
+  def load_fixture(filename)
+    File.read(File.dirname(__FILE__) + "/fixtures/#{filename}")
+  end
+
   def sign_in(user, _options = {})
     auth_hash = {
       provider: 'github',
@@ -43,5 +46,19 @@ class ActionDispatch::IntegrationTest
 
   def current_user
     @current_user ||= User.find_by(id: session[:user_id])
+  end
+
+  def mock_user_repos_list(repos_info)
+    user_repos_list_uri = 'https://api.github.com/user/repos'
+    stub_request(:get, user_repos_list_uri)
+      .to_return status: 304, body: repos_info.to_json,
+                 headers: { 'content-type' => 'application/json; charset=utf-8' }
+  end
+
+  def mock_repo_info(repos_info)
+    repos_info_uri_template = Addressable::Template.new 'https://api.github.com/repositories/{repo_id}'
+    stub_request(:get, repos_info_uri_template)
+      .to_return status: 304, body: repos_info.to_json,
+                 headers: { 'content-type' => 'application/json; charset=utf-8' }
   end
 end

@@ -42,6 +42,12 @@ gem 'omniauth-rails_csrf_protection'
 
 gem 'faker'
 
+gem 'octokit'
+
+gem 'flash_rails_messages'
+
+gem 'enumerize'
+
 group :development, :test do
   # Use sqlite3 as the database for Active Record
   gem 'sqlite3', '~> 1.4'
@@ -72,6 +78,10 @@ group :test do
   gem 'selenium-webdriver'
   # Easy installation and use of web drivers to run system tests with browsers
   gem 'webdrivers'
+
+  gem 'minitest-power_assert'
+
+  gem 'webmock'
 end
 
 group :production do
