@@ -15,11 +15,11 @@ module Web
     def create
       @repository = current_user.repositories.find_or_initialize_by repository_params
       @repository.attributes =
-        (Octokit.client.repo @repository.github_id).to_h.slice :name, :full_name, :language
+        (Octokit.client.repo @repository.github_id).to_h.slice :name, :full_name, :language if @repository.github_id
       if @repository.save
         redirect_to repositories_path, success: t('.success')
       else
-        flash[:danger] = @repository.errors.full_messages_for(:full_name).join ' '
+        flash[:danger] = @repository.errors.full_messages_for(:github_id).join ' '
         render :new, status: :unprocessable_entity
       end
     end
