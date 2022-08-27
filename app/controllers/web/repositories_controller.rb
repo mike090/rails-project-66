@@ -26,6 +26,10 @@ module Web
       end
     end
 
+    def check
+
+    end
+
     def show
       @repository = Repository.find params[:id]
       redirect_to root_path, warning: t('.permission_denied') unless @repository.user_id == current_user.id

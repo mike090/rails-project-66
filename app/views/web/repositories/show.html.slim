@@ -1,6 +1,6 @@
 - content_for :caption, @repository.full_name
 
-= link_to t('.check'), '#', method: :post, class: 'btn btn-primary mb-4'
+= link_to t('.check'), check_repository_path(@repository), method: :patch, class: 'btn btn-primary mb-4'
 p
   strong.me-2 = t('.name')
   = @repository.full_name
