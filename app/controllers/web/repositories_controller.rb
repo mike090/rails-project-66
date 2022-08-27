@@ -14,8 +14,10 @@ module Web
 
     def create
       @repository = current_user.repositories.find_or_initialize_by repository_params
-      @repository.attributes =
-        (Octokit.client.repo @repository.github_id).to_h.slice :name, :full_name, :language if @repository.github_id
+      if @repository.github_id
+        @repository.attributes =
+          (Octokit.client.repo @repository.github_id).to_h.slice :name, :full_name, :language
+      end
       if @repository.save
         redirect_to repositories_path, success: t('.success')
       else
