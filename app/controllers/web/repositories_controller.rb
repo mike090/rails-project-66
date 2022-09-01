@@ -27,7 +27,7 @@ module Web
     end
 
     def check
-
+      render json: RepositoryCheckerApi.check_repo(params[:id])
     end
 
     def show
