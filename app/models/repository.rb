@@ -5,6 +5,7 @@ class Repository < ApplicationRecord
   include AASM
 
   belongs_to :user
+  has_many :checks, dependent: :destroy, class_name: :Check
 
   validates :github_id, presence: true
 

@@ -25,10 +25,11 @@ table.table.table-striped.table-hover.mt-4
           span title=t('update')
             - link_class = 'btn btn-sm btn-outline-dark me-1'
             - link_class += ' disabled' unless repository.may_start_fetching?
-            = link_to repository, class: link_class, 'data-method' => :patch do
+            = link_to repository, class: link_class, method: :patch do
               i.fa-solid.fa-rotate
 
           span title=t('check')
             - link_class = 'btn btn-sm btn-outline-dark me-1'
-            = link_to '#', class: link_class do
+            - link_class += ' disabled' unless repository.github_id
+            = link_to repository_checks_path(repository), class: link_class, method: :post do
               i.fa-solid.fa-check-double

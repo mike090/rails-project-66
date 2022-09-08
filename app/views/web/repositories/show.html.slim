@@ -1,6 +1,6 @@
 - content_for :caption, @repository.full_name
 
-= link_to t('.check'), '#', method: :post, class: 'btn btn-primary mb-4'
+= link_to t('.check'), repository_checks_path(@repository), method: :post, class: 'btn btn-primary mb-4'
 p
   strong.me-2 = t('.name')
   = @repository.full_name
@@ -18,24 +18,30 @@ table.table.table-striped
   thead
     tr
       th scope='col'
-        = '#'
-      th scope='col'
         = t('.state')
       th scope='col'
         = t('.reference')
       th scope='col'
-        = t('.check_state')
+        = t('.check_results')
       th scope='col'
         = t('.created_at')
+      th scope='col'
+        = t('actions')
   tbody
-    tr
-      td scope='row'
-        = link_to '427', '#'
-      td scope='row'
-        = 'finished'
-      td scope='row'
-        = link_to 'c49fa22', '#'
-      td scope='row'
-        = 'false'
-      td scope='row'
-        = '24 Aug 13:53'
+    - @repository.checks.each do |check|
+      tr
+        td scope='row'
+          = t(check.state)
+        td scope='row'
+          - if check.state == 'success'
+            = link_to check.commit, '#'
+        td scope='row'
+          - if check.state == 'success'
+            = 'false'
+        td scope='row'
+          = l(check.created_at, format: :short)
+        td
+          - if check.state == 'success'
+            span title=t('show')
+              = link_to check_path(check), class: 'btn btn-sm btn-outline-dark me-1' do
+                i.fa-solid.fa-magnifying-glass

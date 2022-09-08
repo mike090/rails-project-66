@@ -9,7 +9,7 @@ one:
   github_id: 111111
 
 two:
-  name: repo_1
+  name: js_repo
   full_name: two/repo_1
   language: JavaScript
   check_state: false
