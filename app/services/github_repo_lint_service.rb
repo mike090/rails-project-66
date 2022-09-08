@@ -9,7 +9,7 @@ class GithubRepoLintService
       clone_path = FileUtils.mkpath(Rails.root.join("tmp/repos/#{SecureRandom.urlsafe_base64}")).first
       git = Git.clone clone_url, clone_path
       sha = git.object('HEAD').sha[0..6]
-      blob_url = "#{repo_info.html_url}/blob/#{git.current_branch}"
+      blob_url = "#{repo_info.html_url}/blob/#{sha}"
       check_results = languages.map do |language|
         check_result = CodeChecker.check(clone_path, language)
         check_result[:errors]&.map! do |file|
