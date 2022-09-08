@@ -5,6 +5,7 @@ class RepoUpdateJob < ApplicationJob
 
   def perform(repository_id)
     GithubRepoInfoService.call repository_id
+    Rails.logger.info "Repository id# #{repository_id} info successfly updated"
   rescue StandardError => e
     Rails.logger.error "Error during fetching repository information: #{e}"
   end
