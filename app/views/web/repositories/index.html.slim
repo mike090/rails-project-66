@@ -10,6 +10,8 @@ table.table.table-striped.table-hover.mt-4
         = t('.language')
       th scope='col'
         = t('.check_state')
+      th scope='col'
+        = t('.actions')
   tbody
     - @repositories.each do |repository|
       tr
@@ -18,4 +20,15 @@ table.table.table-striped.table-hover.mt-4
         td
           = repository.language
         td
-          = repository.check_state
+          = repository.check_state || 'No checks yet'
+        td
+          span title=t('update')
+            - link_class = 'btn btn-sm btn-outline-dark me-1'
+            - link_class += ' disabled' unless repository.may_start_fetching?
+            = link_to repository, class: link_class, 'data-method' => :patch do
+              i.fa-solid.fa-rotate
+
+          span title=t('check')
+            - link_class = 'btn btn-sm btn-outline-dark me-1'
+            = link_to '#', class: link_class do
+              i.fa-solid.fa-check-double

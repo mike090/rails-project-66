@@ -10,17 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_08_26_134115) do
+ActiveRecord::Schema.define(version: 2022_09_08_092553) do
 
   create_table "repositories", force: :cascade do |t|
-    t.string "name", null: false
-    t.string "full_name", null: false
-    t.string "language", null: false
-    t.boolean "check_state", default: false, null: false
+    t.string "name"
+    t.string "full_name"
+    t.string "language"
+    t.boolean "check_state"
     t.integer "user_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.integer "github_id", default: 0, null: false
+    t.string "state", default: "", null: false
     t.index ["full_name"], name: "index_repositories_on_full_name", unique: true
     t.index ["user_id", "github_id"], name: "index_repositories_on_user_id_and_github_id", unique: true
     t.index ["user_id"], name: "index_repositories_on_user_id"

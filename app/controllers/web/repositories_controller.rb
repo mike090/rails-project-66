@@ -14,11 +14,9 @@ module Web
 
     def create
       @repository = current_user.repositories.find_or_initialize_by repository_params
-      if @repository.github_id
-        @repository.attributes =
-          (Octokit.client.repo @repository.github_id).to_h.slice :name, :full_name, :language
-      end
       if @repository.save
+        @repository.start_fetching!
+        RepoUpdateJob.perform_later @repository.id
         redirect_to repositories_path, success: t('.success')
       else
         flash[:danger] = @repository.errors.full_messages_for(:github_id).join ' '
@@ -29,6 +27,17 @@ module Web
     def show
       @repository = Repository.find params[:id]
       redirect_to root_path, warning: t('.permission_denied') unless @repository.user_id == current_user.id
+    end
+
+    def update
+      @repository = Repository.find params[:id]
+      if @repository.may_start_fetching?
+        @repository.start_fetching!
+        RepoUpdateJob.perform_later(@repository.id)
+        redirect_to repositories_path, notice: t('success')
+      else
+        redirect_to repositories_path, notice: t('fail')
+      end
     end
 
     private

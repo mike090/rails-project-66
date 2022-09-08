@@ -2,12 +2,30 @@
 
 class Repository < ApplicationRecord
   extend Enumerize
+  include AASM
 
   belongs_to :user
 
-  validates :name, :full_name, :language, presence: true
-  validates :check_state, inclusion: { in: [true, false] }
-  validates :github_id, presence: true, uniqueness: { scope: :user_id }
+  validates :github_id, presence: true
+
+  aasm column: :state do
+    state :created, initial: true
+    state :fetching
+    state :actual
+    state :failed
+
+    event :start_fetching do
+      transitions from: %i[created actual failed], to: :fetching
+    end
+
+    event :end_fetching do
+      transitions from: :fetching, to: :actual
+    end
+
+    event :fail_fetching do
+      transitions from: :fetching, to: :failed
+    end
+  end
 
   enumerize :language, in: %i[Ruby JavaScript]
 end
