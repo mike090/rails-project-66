@@ -3,12 +3,12 @@
 module CodeChecker
   class << self
     def check(path, language)
-      checker = checkers.fetch language.downcase
-      { checker.name => checker.check(path) }
+      checker = checkers.fetch language
+      checker.check(path)
     end
 
     def register_checker(checker)
-      checkers[checker.language.downcase] = checker
+      checkers[checker.language] = checker
     end
 
     def languages
@@ -21,6 +21,7 @@ module CodeChecker
       @checkers ||= {}
     end
   end
-
-  byebug
 end
+
+# require 'rubocop_checker'
+# require 'eslint_checker'

@@ -2,25 +2,27 @@
 
 require 'open3'
 require 'json'
-require_relative 'code_checker'
+# require_relative 'code_checker'
 
 class EslintChecker
-
   class << self
     def language
-      'javascript'
+      :JavaScript
     end
 
-    def name
+    def linter
       'Eslint'
     end
 
     def check(path)
       stdout, stderr, status = (Open3.capture3 "npx eslint #{path} -c .eslint_checker.yml -f json --no-eslintrc")
-      if status.exitstatus == 2
-        { status: :fail, error_message: stderr }
+      case status.exitstatus
+      when 0
+        { linter: linter, status: :check_passed }.merge parse(stdout)
+      when 1
+        { linter: linter, status: :errors_found }.merge parse(stdout)
       else
-        { status: :success, result: parse(stdout) }
+        { linter: linter, status: :fail, error_message: stderr }
       end
     end
 
@@ -41,12 +43,14 @@ class EslintChecker
         }
       end
 
-      result = errors.empty? ? {} : { detail: errors }
+      result = errors.empty? ? {} : { errors: errors }
 
       result.merge(
         {
-          inspected_file_count: raw.count,
-          errors_count: raw.sum { |file| file['errorCount'] }
+          summary: {
+            inspected_file_count: raw.count,
+            errors_count: raw.sum { |file| file['errorCount'] }
+          }
         }
       )
     end
