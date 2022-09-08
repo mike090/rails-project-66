@@ -98,6 +98,9 @@ GEM
     ffi (1.15.5)
     flash_rails_messages (2.3.0)
       rails (>= 5.2)
+    git (1.12.0)
+      addressable (~> 2.8)
+      rchardet (~> 1.8)
     globalid (1.0.0)
       activesupport (>= 5.0)
     hashdiff (1.0.1)
@@ -207,6 +210,7 @@ GEM
     rb-fsevent (0.11.1)
     rb-inotify (0.10.1)
       ffi (~> 1.0)
+    rchardet (1.8.0)
     regexp_parser (2.5.0)
     rexml (3.2.5)
     rollbar (3.3.1)
@@ -316,7 +320,9 @@ DEPENDENCIES
   dotenv-rails
   enumerize
   faker
+  faraday
   flash_rails_messages
+  git
   jbuilder (~> 2.7)
   listen (~> 3.3)
   minitest-power_assert

@@ -48,6 +48,10 @@ gem 'flash_rails_messages'
 
 gem 'enumerize'
 
+gem 'git'
+
+gem 'faraday'
+
 group :development, :test do
   # Use sqlite3 as the database for Active Record
   gem 'sqlite3', '~> 1.4'

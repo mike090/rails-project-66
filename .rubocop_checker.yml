@@ -1,19 +1,22 @@
 ---
 
-require: rubocop-rails
+require:
+  - rubocop-rails
 
 AllCops:
   NewCops: enable
-  TargetRubyVersion: 3.0.2
   Exclude:
-    - 'bin/**'
-    - 'db/schema.rb'
-    - 'db/migrate/**'
-    - 'vendor/**/*'
-    - 'node_modules/**/*'
-    - 'config/initializers/devise.rb'
-    - 'storage/**'
-    - 'tmp/**/*'
+    - 'tmp/**/bin/**'
+    - 'tmp/**/db/schema.rb'
+    - 'tmp/**/db/migrate/**'
+    - 'tmp/**/vendor/**/*'
+    - 'tmp/**/node_modules/**/*'
+    - 'tmp/**/vendor/**/*'
+    - '/tmp/**/tmp/**/*'
+  SuggestExtensions: false
+
+Rails:
+  Enabled: true
 
 Style/ClassAndModuleChildren:
   Enabled: false
@@ -39,11 +42,5 @@ Metrics/BlockLength:
 Style/AsciiComments:
   Enabled: false
 
-Rails/InverseOf:
-  Enabled: false
-
-Lint/ShadowingOuterLocalVariable:
-  Enabled: false
-
-Lint/AmbiguousBlockAssociation:
+Metrics/ParameterLists:
   Enabled: false
