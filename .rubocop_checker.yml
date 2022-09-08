@@ -6,12 +6,12 @@ require:
 AllCops:
   NewCops: enable
   Exclude:
-    - 'tmp/**/bin/**'
-    - 'tmp/**/db/schema.rb'
-    - 'tmp/**/db/migrate/**'
-    - 'tmp/**/vendor/**/*'
-    - 'tmp/**/node_modules/**/*'
-    - 'tmp/**/vendor/**/*'
+    - '/tmp/**/bin/**'
+    - '/tmp/**/db/schema.rb'
+    - '/tmp/**/db/migrate/**'
+    - '/tmp/**/vendor/**/*'
+    - '/tmp/**/node_modules/**/*'
+    - '/tmp/**/vendor/**/*'
     - '/tmp/**/tmp/**/*'
   SuggestExtensions: false
 
