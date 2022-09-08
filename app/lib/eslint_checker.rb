@@ -4,18 +4,18 @@ require 'open3'
 require 'json'
 # require_relative 'code_checker'
 
-class RubocopChecker
+class EslintChecker
   class << self
     def language
-      :Ruby
+      :JavaScript
     end
 
     def linter
-      'Rubocop'
+      'Eslint'
     end
 
     def check(path)
-      stdout, stderr, status = (Open3.capture3 "bundle exec rubocop #{path} -c .rubocop_checker.yml -f j")
+      stdout, stderr, status = (Open3.capture3 "npx eslint #{path} -c .eslint_checker.yml -f json --no-eslintrc")
       case status.exitstatus
       when 0
         { linter: linter, status: :check_passed }.merge parse(stdout)
@@ -30,28 +30,26 @@ class RubocopChecker
 
     def parse(raw)
       raw = JSON.parse raw
-      errors = raw['files'].select do |file|
-        file['offenses'].any?
-      end
-      errors.map! do |file|
+      errors = raw.select { |file| file['messages'].any? }.map do |file|
         {
-          path: file['path'],
-          issues: file['offenses'].map do |offense|
+          path: file['filePath'],
+          issues: file['messages'].map do |message|
             {
-              message: offense['message'],
-              rule: offense['cop_name'],
-              location: offense['location'].slice('line', 'column').transform_keys(&:to_sym)
+              message: message['message'],
+              rule: message['ruleId'],
+              location: message.slice('line', 'column').transform_keys(&:to_sym)
             }
           end
         }
       end
 
       result = errors.empty? ? {} : { errors: errors }
+
       result.merge(
         {
           summary: {
-            inspected_file_count: raw['summary']['inspected_file_count'],
-            errors_count: raw['summary']['offense_count']
+            inspected_file_count: raw.count,
+            errors_count: raw.sum { |file| file['errorCount'] }
           }
         }
       )
