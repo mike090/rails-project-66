@@ -33,11 +33,9 @@ table.table.table-striped
         td scope='row'
           = t(check.state)
         td scope='row'
-          - if check.state == 'success'
-            = link_to check.commit, '#'
+          == draw_check_reference(check)
         td scope='row'
-          - if check.state == 'success'
-            = 'false'
+          = draw_check_result(check)
         td scope='row'
           = l(check.created_at, format: :short)
         td

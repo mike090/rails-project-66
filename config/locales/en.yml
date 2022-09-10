@@ -33,3 +33,5 @@ en:
   update: Update information
   check: Check repository
   show: Show details
+  check_passed: Check passed
+  errors_found: Errors found

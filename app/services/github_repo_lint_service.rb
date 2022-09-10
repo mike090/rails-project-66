@@ -34,7 +34,7 @@ class GithubRepoLintService
         end
         {
           commit: sha,
-          result: check_results.to_json
+          result: check_results
         }
       end
     end

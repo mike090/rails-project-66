@@ -11,17 +11,27 @@ table.table.table-striped.table-hover.mt-4
       th scope='col'
         = t('.check_state')
       th scope='col'
+        = t('.info_updated_at')
+      th scope='col'
         = t('.actions')
   tbody
     - @repositories.each do |repository|
       tr
         td
-          = link_to repository.full_name, repository
+          = repository.full_name
         td
           = repository.language
         td
           = repository.check_state || 'No checks yet'
         td
+          = l(repository.updated_at, format: :long)
+        td
+          span title=t('show')
+            - link_class = 'btn btn-sm btn-outline-dark me-1'
+            - link_class += ' disabled' unless repository.github_id
+            = link_to repository, class: link_class do
+              i.fa-solid.fa-magnifying-glass
+
           span title=t('update')
             - link_class = 'btn btn-sm btn-outline-dark me-1'
             - link_class += ' disabled' unless repository.may_start_fetching?
