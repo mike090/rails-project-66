@@ -15,7 +15,7 @@ class EslintChecker
     end
 
     def check(path)
-      stdout, stderr, status = (Open3.capture3 "npx eslint #{path} -c .eslint_checker.yml -f json --no-eslintrc")
+      stdout, stderr, status = (Open3.capture3 "./node_modules/eslint/bin/eslint.js #{path} -c .eslint_checker.yml -f json --no-eslintrc")
       case status.exitstatus
       when 0
         { linter: linter, status: :check_passed }.merge parse(stdout)
