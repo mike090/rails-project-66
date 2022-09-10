@@ -338,6 +338,7 @@ DEPENDENCIES
   rails (~> 6.1.4, >= 6.1.4.4)
   rails-i18n (~> 6.0)
   rollbar
+  rubocop
   rubocop-rails
   sass-rails (>= 6)
   selenium-webdriver
@@ -357,4 +358,4 @@ RUBY VERSION
    ruby 3.0.2p107
 
 BUNDLED WITH
-   2.3.19
+   2.3.17
