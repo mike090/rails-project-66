@@ -1,6 +1,6 @@
 - content_for :caption, t('repositories')
 
-= link_to t('.new'), new_repository_path, class: 'btn btn-primary'
+= link_to t('.new'), new_repository_path, class: 'btn btn-outline-dark'
 table.table.table-striped.table-hover.mt-4
   thead
     tr
@@ -18,7 +18,7 @@ table.table.table-striped.table-hover.mt-4
     - @repositories.each do |repository|
       tr
         td
-          = repository.full_name
+          = repository.full_name || "Github repository id: #{repository.github_id}"
         td
           = repository.language
         td
@@ -26,6 +26,7 @@ table.table.table-striped.table-hover.mt-4
         td
           = l(repository.updated_at, format: :long)
         td
-          - @resource_actions.each do |action, url_options = {}|
-            - id_param = url_options.fetch :pass_repository_id_as, :id
-            = icon_action_link action, id_param => repository.id, hint: t(action), **url_options.except(:pass_repository_id_as)
+          - @resource_actions.each do |action, link_options = {}|
+            - id_param_name = link_options.fetch :pass_repository_id_as, :id
+            - id_param = id_param_name ? { id_param_name => repository.id } : {}
+            = icon_action_link action, **id_param, caption: t(action), **link_options.except(:pass_repository_id_as)

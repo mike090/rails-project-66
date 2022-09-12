@@ -1,6 +1,5 @@
-- content_for :caption, @repository.full_name
+- content_for :caption, 'Repository information:'
 
-= link_to t('.check'), repository_checks_path(@repository), method: :post, class: 'btn btn-primary mb-4'
 p
   strong.me-2 = t('.name')
   = @repository.full_name
@@ -13,7 +12,15 @@ p
 p
   strong.me-2 = t('.updated_at')
   = l(@repository.updated_at, format: :long)
+
+.mt-4
+  - @resource_actions.each do |action, link_options = {}|
+    - id_param_name = link_options.fetch :pass_repository_id_as, :id
+    - id_param = id_param_name ? { id_param_name => @repository.id } : {}
+    = button_action_link action, **id_param, caption: t(action), **link_options.except(:pass_repository_id_as)
+  = button_action_link :back, action: :index, caption: t('back')
 hr
+
 table.table.table-striped
   thead
     tr
@@ -28,14 +35,14 @@ table.table.table-striped
       th scope='col'
         = t('actions')
   tbody
-    - @repository.checks.each do |check|
+    - @repository.checks.order(created_at: :desc).each do |check|
       tr
         td scope='row'
           = t(check.state)
         td scope='row'
           == draw_check_reference(check)
         td scope='row'
-          = draw_check_result(check)
+          == draw_check_result(check)
         td scope='row'
           = l(check.created_at, format: :short)
         td

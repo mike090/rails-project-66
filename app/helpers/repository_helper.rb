@@ -14,15 +14,14 @@ module RepositoryHelper
 
     results = check.result.map do |key, value|
       content_tag :div, class: :row do
-        row = [content_tag(:div, "#{key}: ", class: 'col-4 text-end')]
-        tag = content_tag :div, class: :col do
+        concat content_tag(:div, "#{key}: ", class: 'col-4 text-end')
+        i_tag = content_tag :div, class: 'col' do
           content_tag(:i, '', class: CHECK_RESULT_ICONS[value['status'].to_sym], title: t(value['status']))
         end
-        row << tag
-        row.join.html_safe
+        concat i_tag
       end
     end
-    results.join.html_safe
+    results.join
   end
 
   def draw_check_reference(check)

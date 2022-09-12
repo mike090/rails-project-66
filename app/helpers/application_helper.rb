@@ -9,7 +9,7 @@ module ApplicationHelper
     show: 'fa-solid fa-eye',
     update: 'fa-solid fa-rotate',
     check: 'fa-solid fa-check-double',
-    rfresh: 'fa-solid fa-rotate',
+    refresh: 'fa-solid fa-rotate',
     back: 'fa-solid fa-rotate-left'
   }.freeze
 
@@ -27,23 +27,27 @@ module ApplicationHelper
     url_options = { action: action }.merge link_options
     path = url_for url_options
     link_class = disabled ? "#{ICON_LINK_CLASS} disabled" : ICON_LINK_CLASS
-    content_tag :span, title: t(action) do
-      link_to path, class: link_class, 'method' => ACTIONS_HTTP_METODS[action] do
+    content_tag :span, title: hint do
+      link_to path, class: link_class, method: ACTIONS_HTTP_METODS[action] do
         content_tag :i, '', class: ACTIONS_ICONS[action]
       end
     end
   end
 
-  def button_action_link(action, html_options)
-
-    link_to path, class: BUTTON_LINK_CLASS, 'data-method' => ACTIONS_HTTP_METODS[action] do
+  def button_action_link(action, link_options)
+    caption = link_options.delete :caption
+    disabled = link_options.delete :disabled
+    url_options = { action: action }.merge link_options
+    path = url_for url_options
+    link_class = disabled ? "#{BUTTON_LINK_CLASS} disabled" : BUTTON_LINK_CLASS
+    link_to path, class: link_class, method: ACTIONS_HTTP_METODS[action] do
       (content_tag :span, class: 'me-2' do
         content_tag :i, '', class: ACTIONS_ICONS[action]
-      end) + t(action)
+      end) + caption
     end
   end
 
-  def allow?(action, resource)
+  def allow?(_action, _resource)
     true
     # policy(resource).public_send("#{action}?") && aasm_allow?(action, resource)
   end
