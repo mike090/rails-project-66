@@ -29,4 +29,4 @@ table.table.table-striped.table-hover.mt-4
           - @resource_actions.each do |action, link_options = {}|
             - id_param_name = link_options.fetch :pass_repository_id_as, :id
             - id_param = id_param_name ? { id_param_name => repository.id } : {}
-            = icon_action_link action, **id_param, caption: t(action), **link_options.except(:pass_repository_id_as)
+            = icon_action_link action, **id_param, hint: t(action), **link_options.except(:pass_repository_id_as)

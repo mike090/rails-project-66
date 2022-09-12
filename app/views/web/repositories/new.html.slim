@@ -1,3 +1,5 @@
+- content_for :caption, t('new_repository')
+
 = simple_form_for @repository do |f|
   = f.input :github_id, collection: @repositories_select_list, error: false
   = f.button :submit, class: 'btn-primary'

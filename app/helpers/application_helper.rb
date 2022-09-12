@@ -6,7 +6,7 @@ module ApplicationHelper
   BUTTON_LINK_CLASS = 'btn btn-outline-dark me-2'
 
   ACTIONS_ICONS = {
-    show: 'fa-solid fa-eye',
+    show: 'fa-solid fa-magnifying-glass',
     update: 'fa-solid fa-rotate',
     check: 'fa-solid fa-check-double',
     refresh: 'fa-solid fa-rotate',

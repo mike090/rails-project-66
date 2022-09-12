@@ -4,7 +4,12 @@ one:
   commit: MyString
   repository: one
   state: MyString
-  result: 
+  result:
+    'Ruby':
+      'linter': 'Rubocop'
+      'summary':
+        'inspected_file_count': 1
+        'errors_count': 2
 
 two:
   commit: MyString

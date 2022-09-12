@@ -24,7 +24,7 @@ module RepositoryHelper
     results.join
   end
 
-  def draw_check_reference(check)
+  def check_reference_link(check)
     return '' unless check.success?
 
     nickname, repo = check.repository.full_name.split '/'

@@ -1,4 +1,4 @@
-- content_for :caption, 'Repository information:'
+- content_for :caption, t('repository_information')
 
 p
   strong.me-2 = t('.name')
@@ -14,7 +14,7 @@ p
   = l(@repository.updated_at, format: :long)
 
 .mt-4
-  - @resource_actions.each do |action, link_options = {}|
+  - @repo_actions.each do |action, link_options = {}|
     - id_param_name = link_options.fetch :pass_repository_id_as, :id
     - id_param = id_param_name ? { id_param_name => @repository.id } : {}
     = button_action_link action, **id_param, caption: t(action), **link_options.except(:pass_repository_id_as)
@@ -40,7 +40,7 @@ table.table.table-striped
         td scope='row'
           = t(check.state)
         td scope='row'
-          == draw_check_reference(check)
+          == check_reference_link(check)
         td scope='row'
           == draw_check_result(check)
         td scope='row'
@@ -48,5 +48,5 @@ table.table.table-striped
         td
           - if check.state == 'success'
             span title=t('show')
-              = link_to check_path(check), class: 'btn btn-sm btn-outline-dark me-1' do
-                i.fa-solid.fa-magnifying-glass
+              - @check_actions.each do |action, link_options = {}|
+                = icon_action_link action, **link_options, id: check.id

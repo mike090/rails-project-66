@@ -45,7 +45,12 @@ module Web
     def show
       @repository = ::Repository.find params[:id]
       redirect_to root_path, warning: t('.permission_denied') unless @repository.user_id == current_user.id
-      @resource_actions = ACTIONS.slice :check, :refresh
+      @repo_actions = ACTIONS.slice :check, :refresh
+      @check_actions = {
+        show: {
+          controller: 'web/repositories/checks'
+        }
+      }
     end
 
     def update

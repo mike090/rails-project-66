@@ -1,0 +1,60 @@
+- content_for :caption, t('check_details')
+.row.pb-1.border-bottom
+  .col-2.text-end
+    strong = "#{t('created_at')}:"
+  .col = l(@check.created_at, format: :long)
+.row.pb-1.border-bottom
+  .col-2.text-end
+    strong = "#{t('repository')}:"
+  .col
+    = link_to @check.repository.full_name, @check.repository
+.row.pb-1.border-bottom
+  .col-2.text-end
+    strong = "#{t('status')}:"
+  .col = t(@check.state)
+
+- @check.result.each do |language, result|
+  .row.mt-4.pb-1.border-bottom
+    .col-2.text-end.fs-5
+      strong = language
+    .col
+  .row.pb-1.border-bottom
+    .col-2.text-end
+      strong = "#{t('linter')}:"
+    .col = result['linter']
+  .row.pb-1.border-bottom
+    .col-2.text-end
+      strong = "#{t('status')}:"
+    .col = t(result['status'])
+  .row.pb-1.border-bottom
+    .col-2.text-end
+      strong = "#{t('files_inspected')}:"
+    .col = result['summary']['inspected_file_count']
+  .row.pb-1.border-bottom
+    .col-2.text-end
+      strong = "#{t('erros_found')}:"
+    .col = result['summary']['errors_count']
+
+  - if result['errors']
+    .row
+      .col-2
+      .col.
+        table.table.table-hover
+          thead
+            tr
+              th
+                = t('message')
+              th
+                = t('rule')
+              th
+                = t('position')
+          tbody
+            - result['errors'].each do |file|
+              tr
+                td colspan='3'
+                  = github_blob_link @check, file['blob_path']
+              - file['issues'].each do |issue|
+                tr
+                  td = issue['message']
+                  td = issue['rule']
+                  td = github_blob_position_link @check, file['blob_path'], issue['location']['line'], issue['location']['column']
