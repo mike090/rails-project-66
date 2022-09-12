@@ -6,6 +6,15 @@ module Web
 
     def index
       @repositories = current_user.repositories
+      @resource_actions = %i[show update].index_with({}).merge(
+        {
+          check: {
+            controller: 'web/repositories/checks',
+            action: :create,
+            pass_repository_id_as: :repository_id
+          }
+        }
+      )
     end
 
     def new
@@ -28,6 +37,7 @@ module Web
     def show
       @repository = ::Repository.find params[:id]
       redirect_to root_path, warning: t('.permission_denied') unless @repository.user_id == current_user.id
+      @resource_actions = %i[check reload back]
     end
 
     def update
