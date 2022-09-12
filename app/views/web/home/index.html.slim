@@ -1,0 +1,7 @@
+- content_for :caption, 'Github repository quality'
+
+p
+  = 'Here you can check your github repository code with linters. Validation for '
+  strong
+    = "#{CodeChecker.languages.join ' and '} "
+  = "code is available right now. Incredible, but it works! #{link_to('Sign in', auth_request_path(:github), method: :post)} to try!".html_safe
