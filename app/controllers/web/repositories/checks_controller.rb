@@ -1,8 +1,11 @@
 # frozen_string_literal: true
 
 class Web::Repositories::ChecksController < Web::ApplicationController
+  before_action :require_authentication
+
   def create
-    @check = Repository.find(params[:repository_id]).checks.build
+    repository = policy_scope(Repository, policy_scope_class: RepositoryPolicy::Scope).find(params[:repository_id])
+    @check = repository.checks.build
     if @check.save
       CheckRepoJob.perform_later @check.id
       redirect_to repository_path(params[:repository_id]), success: t('.success')
@@ -14,5 +17,6 @@ class Web::Repositories::ChecksController < Web::ApplicationController
 
   def show
     @check = Repository::Check.find params[:id]
+    authorize(@check)
   end
 end

@@ -12,16 +12,12 @@ module Web
       },
       refresh: {
         action: :show
-      },
-      back: {
-        action: :index,
-        pass_repository_id_as: nil
       }
 
     }.freeze
 
     def index
-      @repositories = current_user.repositories.decorate
+      @repositories = policy_scope(Repository).decorate
       @resource_actions = %i[show update].index_with({}).merge(ACTIONS.slice(:check))
     end
 
@@ -43,8 +39,7 @@ module Web
     end
 
     def show
-      @repository = ::Repository.find params[:id]
-      redirect_to root_path, warning: t('.permission_denied') unless @repository.user_id == current_user.id
+      @repository = policy_scope(Repository).find params[:id]
       @repo_actions = ACTIONS.slice :check, :refresh
       @check_actions = {
         show: {
@@ -54,7 +49,7 @@ module Web
     end
 
     def update
-      @repository = Repository.find params[:id]
+      @repository = policy_scope(Repository).find params[:id]
       if @repository.may_start_fetching?
         @repository.start_fetching!
         RepoUpdateJob.perform_later(@repository.id)
