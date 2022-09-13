@@ -22,7 +22,7 @@ table.table.table-striped.table-hover.mt-4
         td
           = repository.language
         td
-          = repository.check_state || 'No checks yet'
+          = repository.last_check_passed.nil? ? 'No checks yet' : repository.last_check_passed
         td
           = l(repository.updated_at, format: :long)
         td

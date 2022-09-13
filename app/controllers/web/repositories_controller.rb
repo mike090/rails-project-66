@@ -21,7 +21,7 @@ module Web
     }.freeze
 
     def index
-      @repositories = current_user.repositories
+      @repositories = current_user.repositories.decorate
       @resource_actions = %i[show update].index_with({}).merge(ACTIONS.slice(:check))
     end
 

@@ -10,13 +10,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_09_08_172556) do
+ActiveRecord::Schema.define(version: 2022_09_13_122020) do
 
   create_table "repositories", force: :cascade do |t|
     t.string "name"
     t.string "full_name"
     t.string "language"
-    t.boolean "check_state"
     t.integer "user_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
