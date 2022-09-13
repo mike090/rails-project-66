@@ -1,16 +1,17 @@
 - content_for :caption, t('check_details')
+
 .row.pb-1.border-bottom
   .col-2.text-end
-    strong = "#{t('created_at')}:"
-  .col = l(@check.created_at, format: :long)
-.row.pb-1.border-bottom
-  .col-2.text-end
-    strong = "#{t('repository')}:"
+    strong = colon(caption_for(Repository::Check, :repository))
   .col
     = link_to @check.repository.full_name, @check.repository
 .row.pb-1.border-bottom
   .col-2.text-end
-    strong = "#{t('status')}:"
+    strong = colon(caption_for(Repository::Check, :updated_at))
+  .col = l(@check.updated_at, format: :long)
+.row.pb-1.border-bottom
+  .col-2.text-end
+    strong = colon(caption_for(Repository::Check, :state))
   .col = t(@check.state)
 
 - @check.result.each do |language, result|
@@ -20,19 +21,19 @@
     .col
   .row.pb-1.border-bottom
     .col-2.text-end
-      strong = "#{t('linter')}:"
+      strong = colon(caption_for(Repository::Check, :linter))
     .col = result['linter']
   .row.pb-1.border-bottom
     .col-2.text-end
-      strong = "#{t('status')}:"
+      strong = colon(caption_for(Repository::Check, :status))
     .col = t(result['status'])
   .row.pb-1.border-bottom
     .col-2.text-end
-      strong = "#{t('files_inspected')}:"
+      strong = colon(caption_for(Repository::Check, :files_inspected))
     .col = result['summary']['inspected_file_count']
   .row.pb-1.border-bottom
     .col-2.text-end
-      strong = "#{t('erros_found')}:"
+      strong = colon(caption_for(Repository::Check, :erros_found))
     .col = result['summary']['errors_count']
 
   - if result['errors']
@@ -57,4 +58,4 @@
                 tr
                   td = issue['message']
                   td = issue['rule']
-                  td = github_blob_position_link @check, file['blob_path'], issue['location']['line'], issue['location']['column']
+                  td = github_blob_position_link @check, file['blob_path'], issue['location']

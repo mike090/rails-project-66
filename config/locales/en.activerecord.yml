@@ -1,0 +1,20 @@
+en:
+  activerecord:
+    models:
+      repository: Repository
+      repository/check: Repository Check
+    attributes:
+      repository:
+        name: Name
+        full_name: Full name
+        language: Language
+        last_check_state: Last Check passed
+        created_at: Created at
+        updated_at: Updated at
+        actions: Tools
+      repository/check:
+        commit: Checked commit
+        state: Check state
+        check_results: Check results
+        updated_at: Finished at
+        actions: Tools

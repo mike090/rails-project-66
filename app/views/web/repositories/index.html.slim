@@ -1,19 +1,19 @@
-- content_for :caption, t('repositories')
+- content_for :caption, t('.caption')
 
 = link_to t('.new'), new_repository_path, class: 'btn btn-outline-dark'
 table.table.table-striped.table-hover.mt-4
   thead
     tr
       th scope='col'
-        = t('.name')
+        = caption_for Repository, :name
       th scope='col'
-        = t('.language')
+        = caption_for Repository, :language
       th scope='col'
-        = t('.check_state')
+        = caption_for Repository, :last_check_state
       th scope='col'
-        = t('.info_updated_at')
+        = caption_for Repository, :updated_at
       th scope='col'
-        = t('.actions')
+        = caption_for Repository, :actions
   tbody
     - @repositories.each do |repository|
       tr

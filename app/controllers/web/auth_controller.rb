@@ -16,13 +16,13 @@ module Web
         user.save!
       end
       sign_in user
-      redirect_to repositories_path, success: t('.welcome')
+      redirect_to repositories_path, info: t('.welcome')
     end
 
-    def sing_out
+    def sign_out
       session.delete :user_id
       @current_user = nil
-      redirect_to root_path, success: t('.goodbye')
+      redirect_to root_path, info: t('.goodbye')
     end
 
     private

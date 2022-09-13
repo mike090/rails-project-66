@@ -11,11 +11,11 @@ module Repository::CheckHelper
     link_to reference_path, path, target: '_blank', rel: 'noopener'
   end
 
-  def github_blob_position_link(check, reference_path, line, col)
+  def github_blob_position_link(check, reference_path, location)
     nickname, repo = check.repository.full_name.split '/'
     path = Addressable::Template.new(GITHUB_BLOB_TEMPLATE).expand(
-      nickname: nickname, repo: repo, commit: check.commit, path: reference_path, lline: "L#{line}"
+      nickname: nickname, repo: repo, commit: check.commit, path: reference_path, lline: "L#{location['line']}"
     ).to_s
-    link_to "#{line}:#{col}", path, target: '_blank', rel: 'noopener'
+    link_to "#{location['line']}:#{location['column']}", path, target: '_blank', rel: 'noopener'
   end
 end

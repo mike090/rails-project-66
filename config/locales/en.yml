@@ -30,6 +30,7 @@
 # available at https://guides.rubyonrails.org/i18n.html.
 
 en:
+  actions: Actions
   back: Back
   check: Check repository
   check_passed: Check passed
@@ -47,3 +48,45 @@ en:
   repository: Repository
   result: Results
   update: Update information
+  global:
+    flash:
+      already_signed_in: You are already signed in!
+      not_signed_in: You are not signed in!
+      not_authorized: You do not have permission to perform this action!
+  web:
+    auth:
+      callback:
+        welcome: Successfully signed in into your account
+      sign_out:
+        goodbye: Successfully logged out from your account
+    repositories:
+      checks:
+        create:
+          success: Repository check has been successfully added
+          fail: Repository check has not been added
+      create:
+        success: Repository has been successfully added
+        fail: Repository has not been added
+      index:
+        actions: Actions
+        caption: Repositories list
+        check_state: Last check state
+        info_updated_at: Information updated at
+        language: Language
+        name: Repository name
+        new: New
+        repositories: Repositories list
+      new:
+        caption: Add repository
+      show:
+        caption: Repository information
+      update:
+        success: Update info job is queued
+        fail: Update info job not queued
+  layouts:
+    shared:
+      nav:
+        home: Home
+        title: Github Quality
+        sign_in: Sign in
+        sign_out: Sign out

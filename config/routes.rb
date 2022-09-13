@@ -4,7 +4,7 @@ Rails.application.routes.draw do
   scope module: :web do
     root 'home#index'
 
-    resources :repositories, only: %i[index new create show update], shallow: true do
+    resources :repositories, only: %i[index new create show update edit], shallow: true do
       scope module: :repositories do
         resources :checks, only: %i[show create]
       end
@@ -12,6 +12,6 @@ Rails.application.routes.draw do
 
     post 'auth/:provider', to: 'auth#request', as: :auth_request
     get 'auth/:provider/callback', to: 'auth#callback', as: :callback_auth
-    delete 'auth/sing_out', as: :sing_out
+    delete 'auth/sign_out', as: :sign_out
   end
 end

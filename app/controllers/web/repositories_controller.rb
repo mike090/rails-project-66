@@ -58,9 +58,9 @@ module Web
       if @repository.may_start_fetching?
         @repository.start_fetching!
         RepoUpdateJob.perform_later(@repository.id)
-        redirect_to repositories_path, notice: t('success')
+        redirect_to repositories_path, notice: t('.success')
       else
-        redirect_to repositories_path, notice: t('fail')
+        redirect_to repositories_path, notice: t('.fail')
       end
     end
 

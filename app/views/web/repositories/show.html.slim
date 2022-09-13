@@ -1,19 +1,23 @@
-- content_for :caption, t('repository_information')
+- content_for :caption, t('.caption')
 
-p
-  strong.me-2 = t('.name')
-  = @repository.full_name
-p
-  strong.me-2 = t('.language')
-  = @repository.language
-p
-  strong.me-2 = t('.created_at')
-  = l(@repository.created_at, format: :long)
-p
-  strong.me-2 = t('.updated_at')
-  = l(@repository.updated_at, format: :long)
+.row.pb-1.border-bottom
+  .col-2.text-end
+    strong = colon(caption_for(Repository, :full_name))
+  .col = @repository.full_name
+.row.pb-1.border-bottom
+  .col-2.text-end
+    strong = colon(caption_for(Repository, :language))
+  .col = @repository.language
+.row.pb-1.border-bottom
+  .col-2.text-end
+    strong = colon(caption_for(Repository, :created_at))
+  .col = l(@repository.created_at, format: :long)
+.row.pb-1.border-bottom
+  .col-2.text-end
+    strong = colon(caption_for(Repository, :updated_at))
+  .col = l(@repository.updated_at, format: :long)
 
-.mt-4
+.mt-4.mx-4
   - @repo_actions.each do |action, link_options = {}|
     - id_param_name = link_options.fetch :pass_repository_id_as, :id
     - id_param = id_param_name ? { id_param_name => @repository.id } : {}
@@ -25,15 +29,15 @@ table.table.table-striped
   thead
     tr
       th scope='col'
-        = t('.state')
+        = caption_for Repository::Check, :state
       th scope='col'
-        = t('.reference')
+        = caption_for Repository::Check, :commit
       th scope='col'
-        = t('.check_results')
+        = caption_for Repository::Check, :check_results
       th scope='col'
-        = t('.created_at')
+        = caption_for Repository::Check, :updated_at
       th scope='col'
-        = t('actions')
+        = caption_for Repository::Check, :actions
   tbody
     - @repository.checks.order(created_at: :desc).each do |check|
       tr
@@ -44,7 +48,7 @@ table.table.table-striped
         td scope='row'
           == draw_check_result(check)
         td scope='row'
-          = l(check.created_at, format: :short)
+          = l(check.updated_at, format: :short)
         td
           - if check.state == 'success'
             span title=t('show')

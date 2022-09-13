@@ -52,6 +52,14 @@ module ApplicationHelper
     # policy(resource).public_send("#{action}?") && aasm_allow?(action, resource)
   end
 
+  def colon(str)
+    "#{str}:"
+  end
+
+  def caption_for(model, attribute)
+    model.human_attribute_name attribute
+  end
+
   private
 
   def aasm_allow?(action, resource)
