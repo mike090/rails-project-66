@@ -36,6 +36,8 @@ gem 'simple_form'
 
 gem 'rails-i18n', '~> 6.0' # For 6.x
 
+gem 'omniauth'
+
 gem 'omniauth-github'
 
 gem 'omniauth-rails_csrf_protection'

@@ -35,7 +35,7 @@ module Web
         UpdateRepoJob.perform_later @repository.id
         redirect_to repositories_path, success: t('.success')
       else
-        flash[:danger] = @repository.errors.full_messages_for(:github_id).join ' '
+        flash.now[:danger] = @repository.errors.full_messages_for(:github_id).join ' '
         render :new, status: :unprocessable_entity
       end
     end
