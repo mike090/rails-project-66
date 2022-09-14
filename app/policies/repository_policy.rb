@@ -1,6 +1,23 @@
 # frozen_string_literal: true
 
 class RepositoryPolicy < ApplicationPolicy
+  # we need all these policies to make method “allow?” working
+  def show?
+    true
+  end
+
+  def check?
+    true
+  end
+
+  def update?
+    @record.may_start_fetching?
+  end
+
+  def refresh?
+    show?
+  end
+
   class Scope
     def initialize(user, scope)
       @user = user

@@ -2,7 +2,7 @@
 
 class Repository::CheckPolicy < ApplicationPolicy
   def show?
-    check.repository.user_id == user.id
+    check.repository.user_id == user.id && !check.performing?
   end
 
   private

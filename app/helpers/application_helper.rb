@@ -7,10 +7,11 @@ module ApplicationHelper
 
   ACTIONS_ICONS = {
     show: 'fa-solid fa-magnifying-glass',
-    update: 'fa-solid fa-rotate',
+    update: 'fa-brands fa-github',
     check: 'fa-solid fa-check-double',
     refresh: 'fa-solid fa-rotate',
-    back: 'fa-solid fa-rotate-left'
+    back: 'fa-solid fa-rotate-left',
+    new: 'fa-solid fa-asterisk'
   }.freeze
 
   ACTIONS_HTTP_METODS = {
@@ -21,35 +22,56 @@ module ApplicationHelper
     back: :get
   }.freeze
 
-  def icon_action_link(action, link_options)
-    hint = link_options.delete :hint
-    disabled = link_options.delete :disabled
-    url_options = { action: action }.merge link_options
-    path = url_for url_options
-    link_class = disabled ? "#{ICON_LINK_CLASS} disabled" : ICON_LINK_CLASS
+  def icon_link_class(disabled: false)
+    disabled ? "#{ICON_LINK_CLASS} disabled" : ICON_LINK_CLASS
+  end
+
+  def button_link_class(disabled: false)
+    disabled ? "#{BUTTON_LINK_CLASS} disabled" : BUTTON_LINK_CLASS
+  end
+
+  def http_method_for(action)
+    ACTIONS_HTTP_METODS[action]
+  end
+
+  def action_icon(action)
+    ACTIONS_ICONS[action]
+  end
+
+  def resource_url_options(resource, action, **path_options)
+    id_param_name = path_options.delete(:pass_resource_id_as) || :id
+    { action: action, id_param_name => resource.id }.merge path_options
+  end
+
+  def icon_action_link(action, **link_options)
+    hint = t(action)
+    link_class = icon_link_class disabled: link_options.delete(:disabled)
+    path = url_for link_options
+
     content_tag :span, title: hint do
-      link_to path, class: link_class, method: ACTIONS_HTTP_METODS[action] do
-        content_tag :i, '', class: ACTIONS_ICONS[action]
+      link_to path, class: link_class, method: http_method_for(action) do
+        content_tag :i, '', class: action_icon(action)
       end
     end
   end
 
-  def button_action_link(action, link_options)
-    caption = link_options.delete :caption
-    disabled = link_options.delete :disabled
-    url_options = { action: action }.merge link_options
-    path = url_for url_options
-    link_class = disabled ? "#{BUTTON_LINK_CLASS} disabled" : BUTTON_LINK_CLASS
-    link_to path, class: link_class, method: ACTIONS_HTTP_METODS[action] do
-      (content_tag :span, class: 'me-2' do
-        content_tag :i, '', class: ACTIONS_ICONS[action]
-      end) + caption
+  def button_action_link(action, **link_options)
+    caption = t(action)
+    link_class = button_link_class disabled: link_options.delete(:disabled)
+    path = url_for link_options
+
+    link_to path, class: link_class, method: http_method_for(action) do
+      span = content_tag :span, class: 'me-2' do
+        content_tag :i, '', class: action_icon(action)
+      end
+      concat span
+      concat caption
     end
   end
 
-  def allow?(_action, _resource)
-    true
-    # policy(resource).public_send("#{action}?") && aasm_allow?(action, resource)
+  def allow?(action, resource)
+    resource = resource.object if resource.is_a? Draper::Decorator
+    policy(resource).public_send("#{action}?") && aasm_allow?(action, resource)
   end
 
   def colon(str)

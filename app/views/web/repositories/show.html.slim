@@ -18,11 +18,12 @@
   .col = l(@repository.updated_at, format: :long)
 
 .mt-4.mx-4
-  - @repo_actions.each do |action, link_options = {}|
-    - id_param_name = link_options.fetch :pass_repository_id_as, :id
-    - id_param = id_param_name ? { id_param_name => @repository.id } : {}
-    = button_action_link action, **id_param, caption: t(action), **link_options.except(:pass_repository_id_as)
-  = button_action_link :back, action: :index, caption: t('back')
+  - @repository_actions.each do |action, url_options = {}|
+    - disabled = !allow?(action, @repository)
+    - url_options = resource_url_options(@repository, action, **url_options)
+    = button_action_link action, disabled: disabled, **url_options
+  = button_action_link :back, action: :index
+
 hr
 
 table.table.table-striped
@@ -50,7 +51,7 @@ table.table.table-striped
         td scope='row'
           = l(check.updated_at, format: :short)
         td
-          - if check.state == 'success'
-            span title=t('show')
-              - @check_actions.each do |action, link_options = {}|
-                = icon_action_link action, **link_options, id: check.id
+          - @check_actions.each do |action, url_options = {}|
+            - disabled = !allow?(action, check)
+            - url_options = resource_url_options(check, action, **url_options)
+            = icon_action_link action, disabled: disabled, **url_options

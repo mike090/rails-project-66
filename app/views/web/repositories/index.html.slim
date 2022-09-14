@@ -1,6 +1,8 @@
 - content_for :caption, t('.caption')
 
-= link_to t('.new'), new_repository_path, class: 'btn btn-outline-dark'
+= button_action_link :new, action: :new
+= button_action_link :refresh, action: :index
+
 table.table.table-striped.table-hover.mt-4
   thead
     tr
@@ -26,7 +28,7 @@ table.table.table-striped.table-hover.mt-4
         td
           = l(repository.updated_at, format: :long)
         td
-          - @resource_actions.each do |action, link_options = {}|
-            - id_param_name = link_options.fetch :pass_repository_id_as, :id
-            - id_param = id_param_name ? { id_param_name => repository.id } : {}
-            = icon_action_link action, **id_param, hint: t(action), **link_options.except(:pass_repository_id_as)
+          - @repository_actions.each do |action, url_options = {}|
+            - disabled = !allow?(action, repository)
+            - url_options = resource_url_options(repository, action, **url_options)
+            = icon_action_link action, disabled: disabled, **url_options

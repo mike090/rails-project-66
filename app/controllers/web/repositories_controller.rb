@@ -4,21 +4,23 @@ module Web
   class RepositoriesController < ApplicationController
     before_action :require_authentication
 
-    ACTIONS = {
+    REPOSITORY_ACTIONS = {
       check: {
         controller: 'web/repositories/checks',
         action: :create,
-        pass_repository_id_as: :repository_id
+        pass_resource_id_as: :repository_id
       },
       refresh: {
         action: :show
-      }
+      },
+      show: {},
+      update: {}
 
     }.freeze
 
     def index
       @repositories = policy_scope(Repository).decorate
-      @resource_actions = %i[show update].index_with({}).merge(ACTIONS.slice(:check))
+      @repository_actions = REPOSITORY_ACTIONS.slice :show, :update, :check
     end
 
     def new
@@ -40,7 +42,7 @@ module Web
 
     def show
       @repository = policy_scope(Repository).find params[:id]
-      @repo_actions = ACTIONS.slice :check, :refresh
+      @repository_actions = REPOSITORY_ACTIONS.slice :check, :refresh
       @check_actions = {
         show: {
           controller: 'web/repositories/checks'
