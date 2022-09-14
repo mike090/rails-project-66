@@ -32,7 +32,7 @@ module Web
       @repository = current_user.repositories.find_or_initialize_by repository_params
       if @repository.save
         @repository.start_fetching!
-        RepoUpdateJob.perform_later @repository.id
+        UpdateRepoJob.perform_later @repository.id
         redirect_to repositories_path, success: t('.success')
       else
         flash[:danger] = @repository.errors.full_messages_for(:github_id).join ' '
@@ -54,7 +54,7 @@ module Web
       @repository = policy_scope(Repository).find params[:id]
       if @repository.may_start_fetching?
         @repository.start_fetching!
-        RepoUpdateJob.perform_later(@repository.id)
+        UpdateRepoJob.perform_later(@repository.id)
         redirect_to repositories_path, notice: t('.success')
       else
         redirect_to repositories_path, notice: t('.fail')

@@ -28,5 +28,5 @@ class Repository < ApplicationRecord
     end
   end
 
-  enumerize :language, in: %i[Ruby JavaScript]
+  enumerize :language, in: CodeChecker.languages
 end
