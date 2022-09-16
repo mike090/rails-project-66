@@ -2,8 +2,8 @@
 
 module RepositoryHelper
   CHECK_RESULT_ICONS = {
-    check_passed: 'fa-solid fa-check',
-    errors_found: 'fa-solid fa-bugs',
+    check_passed: 'fa-regular fa-circle-check',
+    errors_found: 'fa-solid fa-bug',
     fail: 'fa-regular fa-circle-xmark'
   }.freeze
 
