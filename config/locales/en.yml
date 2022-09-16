@@ -48,6 +48,9 @@ en:
   repository: Repository
   result: Results
   update: Update information
+  inspected_file_count: Files inspected
+  errors_count: Issues found
+  linter: Linter
   global:
     flash:
       already_signed_in: You are already signed in!

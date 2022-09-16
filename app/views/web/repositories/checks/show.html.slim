@@ -21,20 +21,14 @@
     .col
   .row.pb-1.border-bottom
     .col-2.text-end
-      strong = colon(caption_for(Repository::Check, :linter))
-    .col = result['linter']
-  .row.pb-1.border-bottom
-    .col-2.text-end
       strong = colon(caption_for(Repository::Check, :status))
     .col = t(result['status'])
-  .row.pb-1.border-bottom
-    .col-2.text-end
-      strong = colon(caption_for(Repository::Check, :files_inspected))
-    .col = result['summary']['inspected_file_count']
-  .row.pb-1.border-bottom
-    .col-2.text-end
-      strong = colon(caption_for(Repository::Check, :erros_found))
-    .col = result['summary']['errors_count']
+
+  - result['summary'].each do |key, value|
+    .row.pb-1.border-bottom
+      .col-2.text-end
+        strong = colon t(key)
+      .col = value
 
   - if result['errors']
     .row

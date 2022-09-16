@@ -1,9 +1,5 @@
 # frozen_string_literal: true
 
-require 'open3'
-require 'json'
-# require_relative 'code_checker'
-
 class EslintChecker
   class << self
     def language
@@ -18,11 +14,11 @@ class EslintChecker
       stdout, stderr, status = (Open3.capture3 "./node_modules/eslint/bin/eslint.js #{path} -c .eslint_checker.yml -f json --no-eslintrc")
       case status.exitstatus
       when 0
-        { linter: linter, status: :check_passed }.merge parse(stdout)
+        { status: :check_passed }.merge parse(stdout)
       when 1
-        { linter: linter, status: :errors_found }.merge parse(stdout)
+        { status: :errors_found }.merge parse(stdout)
       else
-        { linter: linter, status: :fail, error_message: stderr }
+        { status: :fail, summary: { linter: linter, error_message: stderr } }
       end
     end
 
@@ -48,6 +44,7 @@ class EslintChecker
       result.merge(
         {
           summary: {
+            linter: linter,
             inspected_file_count: raw.count,
             errors_count: raw.sum { |file| file['errorCount'] }
           }

@@ -1,9 +1,5 @@
 # frozen_string_literal: true
 
-require 'open3'
-require 'json'
-# require_relative 'code_checker'
-
 class RubocopChecker
   class << self
     def language
@@ -18,11 +14,18 @@ class RubocopChecker
       stdout, stderr, status = (Open3.capture3 "bundle exec rubocop #{path} -c .rubocop_checker.yml -f j")
       case status.exitstatus
       when 0
-        { linter: linter, status: :check_passed }.merge parse(stdout)
+        { status: :check_passed }.merge parse(stdout)
       when 1
-        { linter: linter, status: :errors_found }.merge parse(stdout)
+        { status: :errors_found }.merge parse(stdout)
       else
-        { linter: linter, status: :fail, error_message: stderr }
+        {
+          status: :fail,
+          summary:
+          {
+            linter: linter,
+            error_message: stderr
+           }
+         }
       end
     end
 
@@ -50,6 +53,7 @@ class RubocopChecker
       result.merge(
         {
           summary: {
+            linter: linter,
             inspected_file_count: raw['summary']['inspected_file_count'],
             errors_count: raw['summary']['offense_count']
           }
