@@ -33,6 +33,7 @@ module Web
       if @repository.save
         @repository.start_fetching!
         UpdateRepoJob.perform_later @repository.id
+        create_github_hook @repository.github_id
         redirect_to repositories_path, success: t('.success')
       else
         flash.now[:danger] = @repository.errors.full_messages_for(:github_id).join ' '
@@ -78,8 +79,13 @@ module Web
       end
     end
 
+    def create_github_hook(github_id)
+      callback_url = api_checks_url({ host: ENV.fetch('BASE_URL'), protocol: :https, port: Net::HTTP.https_default_port })
+      SetGuthubHookJob.perform_later github_id, callback_url, current_user.token
+    end
+
     def octokit_client
-      @octokit_client ||= Octokit::Client.new access_token: current_user.token, auto_paginate: false
+      @octokit_client ||= Octokit::Client.new access_token: current_user.token
     end
   end
 end
