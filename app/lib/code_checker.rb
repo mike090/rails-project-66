@@ -15,6 +15,10 @@ module CodeChecker
       checkers.keys
     end
 
+    def load_checkers(path)
+      Dir["#{path}/*.rb"].each { |file| require file }
+    end
+
     private
 
     def checkers
