@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class GithubRepoLintService
+class GithubRepoCheckService
   class << self
     def call(check_id)
       check = Repository::Check.find check_id
