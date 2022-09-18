@@ -1,0 +1,10 @@
+' This is automatically generated repository check report for #{@check.repository.full_name}
+= "\r\n" * 2
+' Check results:
+= "\r\n" * 2
+- @check.result.each do |language, result|
+  ' #{language}: #{t(result['status'])}
+  = "\r\n"
+
+= "\r\n"
+' More info at #{check_url @check}

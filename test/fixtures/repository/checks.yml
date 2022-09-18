@@ -6,8 +6,9 @@ one:
   state: MyString
   result:
     'Ruby':
-      'linter': 'Rubocop'
+      'state': 'errors_found'
       'summary':
+        'linter': 'Rubocop'
         'inspected_file_count': 1
         'errors_count': 2
 

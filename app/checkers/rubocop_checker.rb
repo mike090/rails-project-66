@@ -24,8 +24,8 @@ class RubocopChecker
           {
             linter: linter,
             error_message: stderr
-           }
-         }
+          }
+        }
       end
     end
 
@@ -62,5 +62,6 @@ class RubocopChecker
     end
   end
 
-  CodeChecker.register_checker self
+  Rails.logger.debug { "... register checker: #{self.class}" }
+  CodeChecker.register_checker(RubocopChecker) unless RubocopChecker.language.in? CodeChecker.languages
 end

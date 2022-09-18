@@ -53,5 +53,6 @@ class EslintChecker
     end
   end
 
-  CodeChecker.register_checker self
+  Rails.logger.debug { "... egister checker: #{self.class}" }
+  CodeChecker.register_checker EslintChecker unless EslintChecker.language.in? CodeChecker.languages
 end

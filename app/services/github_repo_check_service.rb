@@ -15,6 +15,8 @@ class GithubRepoCheckService
       check.reload
       check.fail! if check.may_fail?
       raise e
+    ensure
+      ReportMailer.repository_check_report(check).deliver_now
     end
 
     def check_repo(github_id)

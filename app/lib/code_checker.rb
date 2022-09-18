@@ -8,6 +8,7 @@ module CodeChecker
     end
 
     def register_checker(checker)
+      Rails.logger.debug { "... register checker: #{checker} ..." }
       checkers[checker.language] = checker
     end
 
@@ -25,4 +26,6 @@ module CodeChecker
       @checkers ||= {}
     end
   end
+
+  CodeChecker.load_checkers(Rails.root.join('checkers'))
 end
