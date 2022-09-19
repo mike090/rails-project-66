@@ -18,7 +18,7 @@
     strong = colon(caption_for(Repository::Check, :passed))
   .col = t(@check.passed?)
 
-- @check.result.each do |language, result|
+- @check.result&.each do |language, result|
   .row.mt-4.pb-1.border-bottom
     .col-2.text-end.fs-5
       strong = language
