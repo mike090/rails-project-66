@@ -4,7 +4,7 @@ class Web::Repositories::ChecksControllerTest < ActionDispatch::IntegrationTest
   test 'should show' do
     sign_in users(:one)
     check = repository_checks(:one)
-    get check_path(check)
+    get repository_check_path(id: check.id, repository_id: check.repository_id)
     assert_response :success
   end
 

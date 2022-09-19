@@ -18,4 +18,4 @@ table
     tr
       th = colon(caption_for(Repository::Check, :status))
       td = t(result['status'])
-= link_to t('more_details'), check_url(@check)
+= link_to t('more_details'), repository_check_url(id: @check.id, repository_id: @check.repository_id)
