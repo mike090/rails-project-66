@@ -36,7 +36,8 @@ class GithubRepoCheckService
         end
         {
           commit: sha,
-          result: check_results
+          result: check_results,
+          passed: check_results.all? { |_language, result| result['status'] == 'check_passed' }
         }
       end
     end

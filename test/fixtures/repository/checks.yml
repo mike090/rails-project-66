@@ -3,10 +3,10 @@
 one:
   commit: MyString
   repository: one
-  state: MyString
+  aasm_state: success
   result:
     'Ruby':
-      'state': 'errors_found'
+      'status': 'errors_found'
       'summary':
         'linter': 'Rubocop'
         'inspected_file_count': 1
@@ -15,5 +15,5 @@ one:
 two:
   commit: MyString
   repository: two
-  state: MyString
-  result: 
+  aasm_state: failed
+  result:

@@ -37,9 +37,12 @@ en:
   created_at: Created at
   errors: Errors
   erros_found: Errors found
+  errors_count: Total Issues
   errors_found: Errors found
   files_inspected: Files instected
+  inspected_file_count: Files inspected
   linter: Linter
+  more_details: More details...
   offenses: Offenses
   show: Show details
   status: Status
@@ -48,9 +51,6 @@ en:
   repository: Repository
   result: Results
   update: Update information
-  inspected_file_count: Files inspected
-  errors_count: Issues found
-  linter: Linter
   global:
     flash:
       already_signed_in: You are already signed in!

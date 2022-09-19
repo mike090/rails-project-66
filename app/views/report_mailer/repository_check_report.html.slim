@@ -8,8 +8,8 @@ table
     th = colon(caption_for(Repository::Check, :updated_at))
     td = l(@check.updated_at, format: :long)
   tr
-    th = colon(caption_for(Repository::Check, :state))
-    td = t(@check.state)
+    th = colon(caption_for(Repository::Check, :aasm_state))
+    td = t(@check.aasm_state)
 
   - @check.result&.each do |language, result|
     tr

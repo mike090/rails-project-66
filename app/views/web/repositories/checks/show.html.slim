@@ -11,8 +11,8 @@
   .col = l(@check.updated_at, format: :long)
 .row.pb-1.border-bottom
   .col-2.text-end
-    strong = colon(caption_for(Repository::Check, :state))
-  .col = t(@check.state)
+    strong = colon(caption_for(Repository::Check, :assm_state))
+  .col = t(@check.aasm_state)
 .row.pb-1.border-bottom
   .col-2.text-end
     strong = colon(caption_for(Repository::Check, :passed))

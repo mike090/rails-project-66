@@ -30,7 +30,7 @@ table.table.table-striped
   thead
     tr
       th scope='col'
-        = caption_for Repository::Check, :state
+        = caption_for Repository::Check, :aasm_state
       th scope='col'
         = caption_for Repository::Check, :commit
       th scope='col'
@@ -43,7 +43,7 @@ table.table.table-striped
     - @repository.checks.order(created_at: :desc).each do |check|
       tr
         td scope='row'
-          = t(check.state)
+          = t(check.aasm_state)
         td scope='row'
           == check_reference_link(check)
         td scope='row'
