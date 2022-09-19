@@ -16,7 +16,8 @@ class Web::Repositories::ChecksController < Web::ApplicationController
   end
 
   def show
-    @check = Repository::Check.find params[:id]
-    authorize(@check)
+    check = Repository::Check.find params[:id]
+    authorize(check)
+    @check = check.decorate
   end
 end
