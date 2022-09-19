@@ -5,7 +5,18 @@ require 'active_support/core_ext/integer/time'
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
-  config.hosts.clear
+  if ENV['PUBLIC_HOST']
+    config.hosts.clear
+    config.hosts << ENV['PUBLIC_HOST']
+    ENV['GITHUB_CLIENT_ID'] = ENV.fetch('PUBLICHOST_GITHUB_CLIENT_ID', nil)
+    ENV['GITHUB_CLIENT_SECRET'] = ENV.fetch('PUBLICHOST_GITHUB_CLIENT_SECRET', nil)
+    # Rails.logger.debug "using public host #{ENV['PUBLIC_HOST']}"
+    # Rails.logger.debug 'ensure GitHub OAuth App "Authorization callback URL" is right'
+    # Rails.logger.debug 'https://github.com/settings/developers'
+  else
+    ENV['GITHUB_CLIENT_ID'] = ENV.fetch('LOCALHOST_GITHUB_CLIENT_ID', nil)
+    ENV['GITHUB_CLIENT_SECRET'] = ENV.fetch('LOCALHOST_GITHUB_CLIENT_SECRET', nil)
+  end
 
   # In the development environment your application's code is reloaded any time
   # it changes. This slows down response time but is perfect for development
@@ -44,9 +55,12 @@ Rails.application.configure do
 
   config.action_mailer.delivery_method = :test
 
-  host = ENV['PUBLIC_HOST'] || 'localhost'
-
-  config.action_mailer.default_url_options = { host: host }
+  config.action_mailer.default_url_options =
+    if ENV['PUBLIC_HOST']
+      { host: ENV['PUBLIC_HOST'] }
+    else
+      { host: 'localhost', port: 3000 }
+    end
 
   # Print deprecation notices to the Rails logger.
   config.active_support.deprecation = :log

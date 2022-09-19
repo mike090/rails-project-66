@@ -80,7 +80,11 @@ module Web
     end
 
     def create_github_hook(github_id)
-      callback_url = api_checks_url({ host: ENV.fetch('BASE_URL'), protocol: :https, port: Net::HTTP.https_default_port })
+      if request.host.in? %w[localhost 127.0.0.1 0.0.0.0]
+        Rails.logger.debug 'set webhook to localhost prevented'
+        return
+      end
+      callback_url = api_checks_url
       SetGuthubHookJob.perform_later github_id, callback_url, current_user.token
     end
 
