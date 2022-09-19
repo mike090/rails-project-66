@@ -5,10 +5,8 @@ class RepositoryDecorator < ApplicationDecorator
 
   def last_check_passed
     last_check = checks.where(state: 'success').order(:updated_at).last
-    return last_check unless last_check
+    return nil unless last_check
 
-    last_check.result.all? do |_language, result|
-      result['status'] == 'check_passed'
-    end
+    last_check.decorate.passed?
   end
 end
