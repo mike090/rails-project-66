@@ -14,7 +14,7 @@ en:
         actions: Tools
       repository/check:
         commit: Checked commit
-        state: Check state
+        aasm_state: Check state
         check_results: Check results
         updated_at: Finished at
         actions: Tools
