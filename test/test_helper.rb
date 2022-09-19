@@ -7,6 +7,12 @@ require 'webmock/minitest'
 
 OmniAuth.config.test_mode = true
 
+class TestHelper
+  def self.why
+    'for add test/ path to autoload_paths (to help you find AuthConcern) and avoid zeitwerk errors'
+  end
+end
+
 class ActiveSupport::TestCase
   # Run tests in parallel with specified workers
   # parallelize(workers: :number_of_processors)

@@ -1,0 +1,32 @@
+name: CI
+
+on:
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    # env:
+    #   RAILS_ENV: test
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '16'
+          cache: 'yarn'
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.0.2'
+          bundler-cache: true
+
+      - name: Setup
+        run: make ci-setup
+
+      - name: CI check
+        run: make check
