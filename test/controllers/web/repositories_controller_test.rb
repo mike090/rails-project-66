@@ -17,13 +17,15 @@ class RepositoriesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'should create repository' do
+    mock_repo_info JSON.parse(load_fixture('files/repo_info.json'))
+
     sign_in users(:one)
     post repositories_url params: {
       repository: {
-        github_id: 123
+        github_id: 524_866_526
       }
     }
-    assert Repository.find_by(github_id: 123)
+    assert Repository.find_by(github_id: 524_866_526)
     assert_redirected_to repositories_path
   end
 
