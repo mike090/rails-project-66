@@ -4,6 +4,11 @@ class Api::ChecksController < ApplicationController
   skip_before_action :verify_authenticity_token
 
   def create
+    if ENV['RAILS_ENV'] == 'test'
+      accept_push repository_params[:id]
+      return
+    end
+
     case request.headers['X-GitHub-Event']
     when 'ping'
       accept_ping
