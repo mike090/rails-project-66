@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_09_19_135619) do
+ActiveRecord::Schema.define(version: 2022_09_19_142619) do
 
   create_table "repositories", force: :cascade do |t|
     t.string "name"
@@ -39,14 +39,13 @@ ActiveRecord::Schema.define(version: 2022_09_19_135619) do
 
   create_table "users", force: :cascade do |t|
     t.string "email", null: false
-    t.string "nickname", null: false
+    t.string "nickname"
     t.string "token", null: false
     t.string "name"
     t.string "image_url"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["email"], name: "index_users_on_email", unique: true
-    t.index ["nickname"], name: "index_users_on_nickname", unique: true
   end
 
   add_foreign_key "repositories", "users"
