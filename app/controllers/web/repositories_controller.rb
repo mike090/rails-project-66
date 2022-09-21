@@ -36,6 +36,7 @@ module Web
         create_github_hook @repository.github_id
         redirect_to repositories_path, success: t('.success')
       else
+        @repositories_select_list = available_repositories
         flash.now[:danger] = @repository.errors.full_messages_for(:github_id).join ' '
         render :new, status: :unprocessable_entity
       end
