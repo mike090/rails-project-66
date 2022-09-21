@@ -12,7 +12,7 @@ module RepositoryHelper
   def draw_check_result(check)
     return '' unless check.finished?
 
-    results = check.result.map do |key, value|
+    results = (check.result || {}).map do |key, value|
       content_tag :div, class: :row do
         concat content_tag(:div, "#{key}: ", class: 'col-4 text-end')
         i_tag = content_tag :div, class: 'col' do
