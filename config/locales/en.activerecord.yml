@@ -5,13 +5,14 @@ en:
       repository/check: Repository Check
     attributes:
       repository:
-        name: Name
+        actions: Tools
+        created_at: Created at
         full_name: Full name
+        github_id: Github repository name
         language: Language
         last_check_state: Last Check passed
-        created_at: Created at
+        name: Name
         updated_at: Updated at
-        actions: Tools
       repository/check:
         commit: Checked commit
         aasm_state: Check state
@@ -19,3 +20,9 @@ en:
         updated_at: Finished at
         actions: Tools
         passed: Check passed
+    errors:
+        models:
+          repository:
+            attributes:
+              github_id:
+                blank: required
