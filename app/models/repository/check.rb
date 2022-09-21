@@ -6,16 +6,16 @@ class Repository::Check < ApplicationRecord
   belongs_to :repository, class_name: :Repository
 
   aasm do
-    state :performing, initial: true
-    state :success
+    state :checking, initial: true
+    state :finished
     state :failed
 
     event :complete do
-      transitions from: :performing, to: :success
+      transitions from: :checking, to: :finished
     end
 
     event :fail do
-      transitions from: :performing, to: :failed
+      transitions from: :checking, to: :failed
     end
   end
 end

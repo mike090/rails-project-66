@@ -33,13 +33,16 @@ en:
   actions: Actions
   back: Back
   check: Check repository
+  checking: checking
   check_passed: Check passed
   created_at: Created at
   errors: Errors
   erros_found: Errors found
   errors_count: Total Issues
   errors_found: Errors found
+  failed: failed
   files_inspected: Files instected
+  finished: finished
   inspected_file_count: Files inspected
   linter: Linter
   more_details: More details...

@@ -10,7 +10,7 @@ module RepositoryHelper
   GITHUB_COMMIT_TEMPLATE = 'https://github.com/{nickname}/{repo}/commit/{commit}'
 
   def draw_check_result(check)
-    return '' unless check.success?
+    return '' unless check.finished?
 
     results = check.result.map do |key, value|
       content_tag :div, class: :row do
@@ -25,7 +25,7 @@ module RepositoryHelper
   end
 
   def check_reference_link(check)
-    return '' unless check.success?
+    return '' unless check.finished?
 
     nickname, repo = check.repository.full_name.split '/'
     url = Addressable::Template.new(GITHUB_COMMIT_TEMPLATE).expand(
