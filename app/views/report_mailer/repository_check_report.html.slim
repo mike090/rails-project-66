@@ -11,11 +11,17 @@ table
     th = colon(caption_for(Repository::Check, :aasm_state))
     td = t(@check.aasm_state)
 
-  - @check.result&.each do |language, result|
+  - case @check.aasm_state
+  - when 'finished'
+    - @check.result&.each do |language, result|
+      tr
+        th = language
+        td
+      tr
+        th = colon(caption_for(Repository::Check, :status))
+        td = t(result['status'])
+  - when 'failed'
     tr
-      th = language
-      td
-    tr
-      th = colon(caption_for(Repository::Check, :status))
-      td = t(result['status'])
+      th = colon(t('error'))
+      td = @check.result
 = link_to t('more_details'), repository_check_url(id: @check.id, repository_id: @check.repository_id)

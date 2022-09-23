@@ -1,10 +1,17 @@
 ' This is automatically generated repository check report for #{@check.repository.full_name}
 = "\r\n" * 2
-' Check results:
-= "\r\n" * 2
-- @check.result.each do |language, result|
-  ' #{language}: #{t(result['status'])}
-  = "\r\n"
+
+' #{colon t('check_state')} #{@check.aasm_state}
+= "\r\n"
+- case @check.aasm_state
+- when 'finished'
+  ' Check results:
+  = "\r\n" * 2
+  - @check.result.each do |language, result|
+    ' #{language}: #{t(result['status'])}
+    = "\r\n"
+- when 'failed'
+  ' #{t('error')}: #{@check.result}
 
 = "\r\n"
 ' More info at #{repository_check_url id: @check.id, repository_id: @check.repository_id}

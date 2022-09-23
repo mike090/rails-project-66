@@ -86,7 +86,7 @@ module Web
         return
       end
       callback_url = api_checks_url
-      SetGuthubHookJob.perform_later github_id, callback_url, current_user.token
+      SetRepoHookJob.perform_later github_id, callback_url, current_user.token
     end
 
     def octokit_client

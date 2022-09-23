@@ -33,9 +33,12 @@ en:
   actions: Actions
   back: Back
   check: Check repository
-  checking: checking
+  check_details: Check details
   check_passed: Check passed
+  check_state: Check state
+  checking: checking
   created_at: Created at
+  error: Error
   errors: Errors
   erros_found: Errors found
   errors_count: Total Issues

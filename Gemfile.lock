@@ -99,6 +99,8 @@ GEM
       activesupport (>= 5.0)
       request_store (>= 1.0)
       ruby2_keywords
+    dry-container (0.11.0)
+      concurrent-ruby (~> 1.0)
     enumerize (2.5.0)
       activesupport (>= 3.2)
     erubi (1.11.0)
@@ -338,6 +340,7 @@ DEPENDENCIES
   capybara (>= 3.26)
   dotenv-rails
   draper
+  dry-container
   enumerize
   faker
   faraday

@@ -1,0 +1,44 @@
+.row.pb-1.border-bottom
+  .col-2.text-end
+    strong = colon(caption_for(Repository::Check, :passed))
+  .col = t(check.passed?)
+
+- check.result&.each do |language, result|
+  .row.mt-4.pb-1.border-bottom
+    .col-2.text-end.fs-5
+      strong = language
+    .col
+  .row.pb-1.border-bottom
+    .col-2.text-end
+      strong = colon(caption_for(Repository::Check, :status))
+    .col = t(result['status'])
+
+  - result['summary'].each do |key, value|
+    .row.pb-1.border-bottom
+      .col-2.text-end
+        strong = colon t(key)
+      .col = value
+
+  - if result['errors']
+    .row
+      .col-2
+      .col.
+        table.table.table-hover
+          thead
+            tr
+              th
+                = t('message')
+              th
+                = t('rule')
+              th
+                = t('position')
+          tbody
+            - result['errors'].each do |file|
+              tr
+                td colspan='3'
+                  = github_blob_link @check, file['blob_path']
+              - file['issues'].each do |issue|
+                tr
+                  td = issue['message']
+                  td = issue['rule']
+                  td = github_blob_position_link @check, file['blob_path'], issue['location']
