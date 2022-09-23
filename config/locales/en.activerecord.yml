@@ -16,10 +16,10 @@ en:
       repository/check:
         commit: Checked commit
         aasm_state: Check state
-        check_results: Check results
+        check_result: Check result
         updated_at: Finished at
         actions: Tools
-        passed: Check passed
+        passed: Passed
     errors:
         models:
           repository:
