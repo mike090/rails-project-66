@@ -47,3 +47,6 @@ Style/AsciiComments:
 
 Metrics/ParameterLists:
   Enabled: false
+
+Lint/RedundantDirGlobSort:
+  Enabled: false
