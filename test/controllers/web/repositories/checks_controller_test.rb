@@ -8,9 +8,14 @@ class Web::Repositories::ChecksControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
-  test 'should create' do
+  test 'test create' do
     sign_in users(:one)
-    post repository_checks_path(repositories(:one))
+    repo = repositories(:one)
+    assert_difference 'repo.checks.count' do
+      post repository_checks_path(repo)
+    end
+    check = repo.checks.last
+    assert check.finished?
     assert_redirected_to repository_path(repositories(:one))
   end
 end

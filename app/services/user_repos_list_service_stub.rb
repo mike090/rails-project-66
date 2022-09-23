@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-class RepoCheckServiceStub
+class UserReposListServiceStub
   def self.call(*_args)
-    { passed: true }
+    []
   end
 end

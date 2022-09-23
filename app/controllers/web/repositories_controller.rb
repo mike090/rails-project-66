@@ -72,7 +72,7 @@ module Web
     def available_repositories
       traceable_repos = current_user.repositories.pluck(:github_id)
       supported_languages = Repository.enumerized_attributes[:language].values
-      options = octokit_client.repos.reject do |repo|
+      options = user_repos_list.reject do |repo|
         repo.id.in?(traceable_repos) || !repo.language.in?(supported_languages)
       end
       options.map do |repo|
@@ -89,8 +89,8 @@ module Web
       SetRepoHookJob.perform_later github_id, callback_url, current_user.token
     end
 
-    def octokit_client
-      @octokit_client ||= Octokit::Client.new access_token: current_user.token
+    def user_repos_list
+      ApplicationContainer['user_repos_list_service'].call(current_user.token)
     end
   end
 end
