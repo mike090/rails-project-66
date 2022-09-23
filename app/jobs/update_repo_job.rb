@@ -6,7 +6,7 @@ class UpdateRepoJob < ApplicationJob
   def perform(repository_id)
     repo = Repository.find(repository_id)
     repo.transaction do
-      update_values = ApplicationContainer['repo_info_service'].call repo.github_id
+      update_values = ApplicationContainer['service_adapter'].repository_info repo.github_id
       repo.attributes = update_values if update_values
       repo.end_fetching
       repo.save!

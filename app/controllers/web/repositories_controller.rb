@@ -90,7 +90,7 @@ module Web
     end
 
     def user_repos_list
-      ApplicationContainer['user_repos_list_service'].call(current_user.token)
+      ApplicationContainer['service_adapter'].user_repos_list(current_user.token)
     end
   end
 end

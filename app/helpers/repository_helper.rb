@@ -10,18 +10,20 @@ module RepositoryHelper
   GITHUB_COMMIT_TEMPLATE = 'https://github.com/{nickname}/{repo}/commit/{commit}'
 
   def draw_check_result(check)
-    return '' unless check.finished?
-
-    results = (check.result || {}).map do |key, value|
-      content_tag :div, class: :row do
-        concat content_tag(:div, "#{key}: ", class: 'col-4 text-end')
-        i_tag = content_tag :div, class: 'col' do
-          content_tag(:i, '', class: CHECK_RESULT_ICONS[value['status'].to_sym], title: t(value['status']))
+    if check.finished?
+      results = (check.result || {}).map do |key, value|
+        content_tag :div, class: :row do
+          concat content_tag(:div, "#{key}: ", class: 'col-4 text-end')
+          i_tag = content_tag :div, class: 'col' do
+            content_tag(:i, '', class: CHECK_RESULT_ICONS[value['status'].to_sym], title: t(value['status']))
+          end
+          concat i_tag
         end
-        concat i_tag
       end
+      results.join
+    else
+      check.result
     end
-    results.join
   end
 
   def check_reference_link(check)
