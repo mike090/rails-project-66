@@ -17,7 +17,7 @@ module CodeChecker
     end
 
     def load_checkers(path)
-      Dir["#{path}/*.rb"].each { |file| require file }
+      Dir["#{path}/*.rb"].sort.each { |file| require file }
     end
 
     private
