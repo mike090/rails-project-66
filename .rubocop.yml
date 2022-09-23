@@ -1,6 +1,8 @@
 ---
 
-require: rubocop-rails
+require:
+  - rubocop-performance
+  - rubocop-rails
 
 AllCops:
   NewCops: enable
@@ -14,6 +16,10 @@ AllCops:
     - 'config/initializers/devise.rb'
     - 'storage/**'
     - 'tmp/**/*'
+  SuggestExtensions: false
+
+Rails:
+  Enabled: true
 
 Style/ClassAndModuleChildren:
   Enabled: false
@@ -39,11 +45,5 @@ Metrics/BlockLength:
 Style/AsciiComments:
   Enabled: false
 
-Rails/InverseOf:
-  Enabled: false
-
-Lint/ShadowingOuterLocalVariable:
-  Enabled: false
-
-Lint/AmbiguousBlockAssociation:
+Metrics/ParameterLists:
   Enabled: false
