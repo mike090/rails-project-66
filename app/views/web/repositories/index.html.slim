@@ -24,7 +24,7 @@ table.table.table-striped.table-hover.mt-4
         td
           = repository.language
         td
-          = repository.last_check_passed || t('.no checks')
+          = repository.last_check_passed.nil? ? t('.no checks') : repository.last_check_passed
         td
           = l(repository.updated_at, format: :long)
         td
