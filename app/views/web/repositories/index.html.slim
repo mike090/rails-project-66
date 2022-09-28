@@ -20,11 +20,11 @@ table.table.table-striped.table-hover.mt-4
     - @repositories.each do |repository|
       tr
         td
-          = repository.full_name || "Github repository id: #{repository.github_id}"
+          = repository.full_name || t('.nil_repo_name', github_id: repository.github_id)
         td
           = repository.language
         td
-          = repository.last_check_passed.nil? ? 'No checks yet' : repository.last_check_passed
+          = repository.last_check_passed || t('.no checks')
         td
           = l(repository.updated_at, format: :long)
         td

@@ -5,8 +5,6 @@ class RepositoryDecorator < ApplicationDecorator
 
   def last_check_passed
     last_check = checks.finished.order(:updated_at).last
-    return nil unless last_check
-
-    last_check.passed?
+    last_check&.passed?
   end
 end

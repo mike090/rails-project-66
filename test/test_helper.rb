@@ -59,18 +59,4 @@ class ActiveSupport::TestCase
   def current_user
     @current_user ||= User.find_by(id: session[:user_id])
   end
-
-  # def mock_user_repos_list(repos_info)
-  #   user_repos_list_uri = 'https://api.github.com/user/repos'
-  #   stub_request(:get, user_repos_list_uri)
-  #     .to_return status: 304, body: repos_info.to_json,
-  #                headers: { 'content-type' => 'application/json; charset=utf-8' }
-  # end
-
-  # def mock_repo_info(repos_info)
-  #   repos_info_uri_template = Addressable::Template.new 'https://api.github.com/repositories/{repo_id}'
-  #   stub_request(:get, repos_info_uri_template)
-  #     .to_return status: 304, body: repos_info.to_json,
-  #                headers: { 'content-type' => 'application/json; charset=utf-8' }
-  # end
 end

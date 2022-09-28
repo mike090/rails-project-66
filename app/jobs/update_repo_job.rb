@@ -13,6 +13,7 @@ class UpdateRepoJob < ApplicationJob
     end
     Rails.logger.info "Repository id# #{repository_id} info successfly updated"
   rescue StandardError => e
+    repo.fail_fetching! if repo.may_fail_fetching?
     Rails.logger.error "Error during fetching repository information: #{e}"
   end
 end

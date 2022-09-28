@@ -1,9 +1,9 @@
-- content_for :caption, 'Github repository quality'
+- content_for :caption, t('app_title_long')
 
 p
-  = 'Here you can check your github repository code with linters. Validation for '
+  = t('.welcome_p1')
   strong
-    = CodeChecker.languages.join(', ').sub(/(.*),/, '\1 and')
-  = ' code is available right now. Incredible, but it works! '
-  = link_to('Sign in', auth_request_path(:github), method: :post)
-  = ' to try!'
+   = CodeChecker.languages.join(', ').sub(/(.*),/, "\\1 #{t('and')}")
+  = t('.welcome_p2')
+  = link_to(t('.sign_in'), auth_request_path(:github), method: :post)
+  = t('.welcome_p3')

@@ -31,6 +31,9 @@
 
 en:
   actions: Actions
+  app_title: Github Quality
+  app_title_long: Github repository quality
+  and: and
   back: Back
   check: Check repository
   check_details: Check details
@@ -68,6 +71,12 @@ en:
         welcome: Successfully signed in into your account
       sign_out:
         goodbye: Successfully logged out from your account
+    home:
+      index:
+        sign_in: Sign in
+        welcome_p1: 'Here you can check your github repository code with linters. Validation for '
+        welcome_p2: ' code is available right now. Incredible, but it works! '
+        welcome_p3: ' to try!'
     repositories:
       checks:
         create:
@@ -84,6 +93,8 @@ en:
         language: Language
         name: Repository name
         new: New
+        nil_repo_name: 'Github repository id: %{github_id}'
+        no checks: 'No checks yet'
         repositories: Repositories list
       new:
         caption: Add repository

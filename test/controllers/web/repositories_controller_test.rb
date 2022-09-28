@@ -23,9 +23,16 @@ class RepositoriesControllerTest < ActionDispatch::IntegrationTest
       }
     }
     repo = Repository.find_by(github_id: 524_866_526)
-    assert { repo != nil? }
-    assert { repo.language.present? }
+    assert { repo&.language.present? }
     assert_redirected_to repositories_path
+  end
+
+  test 'update' do
+    user = users(:one)
+    repo = user.repositories.first
+    sign_in user
+    patch repository_path(repo)
+    assert { repo.id = Repository.find_by(MockAdapter.repository_info).id }
   end
 
   test 'test author show' do

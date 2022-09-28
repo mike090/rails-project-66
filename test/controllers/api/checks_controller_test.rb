@@ -8,6 +8,8 @@ class ChecksControllerTest < ActionDispatch::IntegrationTest
     assert_difference 'repository.checks.count' do
       post api_checks_path, params: { repository: { id: repository.github_id } }, headers: { 'X-GitHub-Event' => 'push' }
     end
+    check = repository.checks.last
+    assert { check.finished? }
     assert_response :success
   end
 end

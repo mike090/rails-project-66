@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 
 module Authentication
-  class AuthenticationRequeredError < StandardError; end
+  class AuthenticationRequiredError < StandardError; end
 
   extend ActiveSupport::Concern
 
   included do
-    rescue_from AuthenticationRequeredError, with: :authentication_required
+    rescue_from AuthenticationRequiredError, with: :authentication_required
 
     def current_user
       @current_user ||= User.find_by id: session[:user_id]
@@ -20,7 +20,7 @@ module Authentication
     def require_authentication
       return if signed_in?
 
-      raise AuthenticationRequeredError
+      raise AuthenticationRequiredError
     end
 
     def authentication_required

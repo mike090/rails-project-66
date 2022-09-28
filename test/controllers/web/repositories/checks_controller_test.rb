@@ -15,7 +15,7 @@ class Web::Repositories::ChecksControllerTest < ActionDispatch::IntegrationTest
       post repository_checks_path(repo)
     end
     check = repo.checks.last
-    assert check.finished?
+    assert { check.finished? }
     assert_redirected_to repository_path(repositories(:one))
   end
 end
