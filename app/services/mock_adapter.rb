@@ -3,7 +3,7 @@
 class MockAdapter
   class << self
     def repository_info(*_args)
-      { name: 'repo', full_name: 'user/urepo', language: 'Ruby' }
+      { name: 'repo', full_name: 'user/repo', language: 'Ruby', clone_url: 'https://github.com/user/repo.git' }
     end
 
     def user_repos_list(*_args)

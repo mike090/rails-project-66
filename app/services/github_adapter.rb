@@ -3,7 +3,7 @@
 class GithubAdapter
   class << self
     def repository_info(github_id)
-      Octokit.client.repo(github_id).to_h.slice :name, :full_name, :language
+      Octokit.client.repo(github_id).to_h.slice :name, :full_name, :language, :clone_url
     end
 
     def user_repos_list(user_token)

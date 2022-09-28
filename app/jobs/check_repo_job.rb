@@ -11,7 +11,7 @@ class CheckRepoJob < ApplicationJob
 
     check.transaction do
       github_id = check.repository.github_id
-      update_values = ApplicationContainer['repo_check_service'].call github_id
+      update_values = ApplicationContainer['repo_check_service'].call github_id, clone_url: check.repository.clone_url
       check.attributes = update_values if update_values
       check.complete
       check.save!

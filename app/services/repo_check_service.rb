@@ -5,8 +5,8 @@ class RepoCheckService
     @service_adapter = remote_service_adapter
   end
 
-  def call(repo_id)
-    clone_url = @service_adapter.clone_url(repo_id)
+  def call(repo_id, clone_url: nil)
+    clone_url ||= @service_adapter.clone_url(repo_id)
     languages = @service_adapter.repo_languages(repo_id) & CodeChecker.languages
 
     GitCloneService.call(clone_url) do |git|
