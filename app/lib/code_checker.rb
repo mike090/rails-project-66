@@ -1,6 +1,10 @@
 # frozen_string_literal: true
 
 module CodeChecker
+  class Configuration
+    attr_accessor :checkers_path
+  end
+
   class << self
     def check(path, language)
       checker = checkers.fetch language
@@ -8,7 +12,7 @@ module CodeChecker
     end
 
     def register_checker(checker)
-      Rails.logger.debug { "... register checker: #{checker} ..." }
+      Rails.logger.debug { "#{checker} registration..." }
       checkers[checker.language] = checker
     end
 
@@ -20,10 +24,21 @@ module CodeChecker
       Dir["#{path}/*.rb"].sort.each { |file| require file }
     end
 
+    def configurate
+      @config ||= Configuration.new
+      yield @config if block_given?
+    end
+
     private
 
     def checkers
-      @checkers ||= {}
+      unless @checkers
+        @checkers = {}
+        if @config
+          Dir["#{@config.checkers_path}/*.rb"].each { |file| require file }
+        end
+      end
+      @checkers
     end
   end
 

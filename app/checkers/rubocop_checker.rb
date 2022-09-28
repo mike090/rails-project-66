@@ -62,6 +62,6 @@ class RubocopChecker
     end
   end
 
-  Rails.logger.debug { "... register checker: #{self.class}" }
-  CodeChecker.register_checker(RubocopChecker) unless RubocopChecker.language.in? CodeChecker.languages
+  Rails.logger.debug 'eslint_checker.rb code execution...'
+  CodeChecker.register_checker RubocopChecker
 end
