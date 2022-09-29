@@ -20,10 +20,6 @@ module CodeChecker
       checkers.keys
     end
 
-    def load_checkers(path)
-      Dir["#{path}/*.rb"].sort.each { |file| require file }
-    end
-
     def configurate
       @config ||= Configuration.new
       yield @config if block_given?
@@ -35,12 +31,10 @@ module CodeChecker
       unless @checkers
         @checkers = {}
         if @config
-          Dir["#{@config.checkers_path}/*.rb"].each { |file| require file }
+          Dir["#{@config.checkers_path}/*.rb"].sort.each { |file| require file }
         end
       end
       @checkers
     end
   end
-
-  CodeChecker.load_checkers(Rails.root.join('checkers'))
 end
