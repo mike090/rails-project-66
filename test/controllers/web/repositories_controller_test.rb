@@ -3,19 +3,19 @@
 require 'test_helper'
 
 class RepositoriesControllerTest < ActionDispatch::IntegrationTest
-  test 'test index' do
+  test 'index' do
     sign_in users(:one)
     get repositories_url
     assert_response :success
   end
 
-  test 'test new' do
+  test 'new' do
     sign_in users(:one)
     get new_repository_url
     assert_response :success
   end
 
-  test 'test create' do
+  test 'create' do
     sign_in users(:one)
     post repositories_url params: {
       repository: {
@@ -32,7 +32,7 @@ class RepositoriesControllerTest < ActionDispatch::IntegrationTest
     repo = user.repositories.first
     sign_in user
     patch repository_path(repo)
-    assert { repo.id = Repository.find_by(MockAdapter.repository_info).id }
+    assert { repo.id = Repository.find_by(AdapterStub.repository_info).id }
   end
 
   test 'test author show' do

@@ -13,3 +13,10 @@ two:
   language: JavaScript
   user: two
   github_id: 111112
+
+without_checks:
+  name: without_checks
+  full_name: one/without_checks
+  language: Ruby
+  user: one
+  github_id: 111113

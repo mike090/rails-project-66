@@ -3,10 +3,10 @@
 class SetRepoHookJob < ApplicationJob
   queue_as :default
 
-  def perform(github_repo_id, payload_url, access_token, *events)
-    ApplicationContainer['service_adapter'].set_repo_hook github_repo_id, payload_url, access_token, *events
-    Rails.logger.info "Webhook for Github repo id: #{github_repo_id} successfly setted"
+  def perform(repo_id, payload_url, *events)
+    ApplicationContainer['remote_service'].set_repo_hook repo_id, payload_url, *events
+    Rails.logger.info "Webhook for repo id: #{repo_id} successfly setted"
   rescue StandardError => e
-    Rails.logger.error "Github repo id: #{github_repo_id} webhook setting error: #{e.class} - #{e.message}"
+    Rails.logger.error "Repo id: #{repo_id} webhook setting error: #{e.class} - #{e.message}"
   end
 end

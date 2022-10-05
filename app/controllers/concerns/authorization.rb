@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-# frozen_sring_literal: true
-
 module Authorization
   extend ActiveSupport::Concern
 

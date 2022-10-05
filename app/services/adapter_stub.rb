@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class MockAdapter
+class AdapterStub
   class << self
     def repository_info(*_args)
       { name: 'repo', full_name: 'user/repo', language: 'Ruby', clone_url: 'https://github.com/user/repo.git' }

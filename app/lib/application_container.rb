@@ -5,9 +5,9 @@ class ApplicationContainer
 
   if Rails.env.test?
     register :repo_check_service, RepoCheckServiceStub
-    register :service_adapter, MockAdapter
+    register :remote_service, AdapterStub
   else
     register :repo_check_service, -> { RepoCheckService.new GithubAdapter }
-    register :service_adapter, GithubAdapter
+    register :remote_service, GithubAdapter
   end
 end

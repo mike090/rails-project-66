@@ -25,18 +25,17 @@ module Web
 
     def new
       @repository = current_user.repositories.build
-      @repositories_select_list = available_repositories
+      @repositories_for_select = available_repositories
     end
 
     def create
       @repository = current_user.repositories.find_or_initialize_by repository_params
       if @repository.save
-        @repository.start_fetching!
         UpdateRepoJob.perform_later @repository.id
-        create_github_hook @repository.github_id
+        create_hook @repository.id
         redirect_to repositories_path, success: t('.success')
       else
-        @repositories_select_list = available_repositories
+        @repositories_for_select = available_repositories
         flash.now[:danger] = @repository.errors.full_messages_for(:github_id).join ' '
         render :new, status: :unprocessable_entity
       end
@@ -55,7 +54,6 @@ module Web
     def update
       @repository = policy_scope(Repository).find params[:id]
       if @repository.may_start_fetching?
-        @repository.start_fetching!
         UpdateRepoJob.perform_later(@repository.id)
         redirect_to repositories_path, notice: t('.success')
       else
@@ -80,17 +78,13 @@ module Web
       end
     end
 
-    def create_github_hook(github_id)
-      if request.host.in? %w[localhost 127.0.0.1 0.0.0.0]
-        Rails.logger.debug 'set webhook to localhost prevented'
-        return
-      end
+    def create_hook(repo_id)
       callback_url = api_checks_url
-      SetRepoHookJob.perform_later github_id, callback_url, current_user.token
+      SetRepoHookJob.perform_later repo_id, callback_url
     end
 
     def user_repos_list
-      ApplicationContainer['service_adapter'].user_repos_list(current_user.token)
+      ApplicationContainer['remote_service'].user_repos_list(current_user.token)
     end
   end
 end

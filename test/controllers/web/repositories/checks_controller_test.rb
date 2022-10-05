@@ -10,12 +10,10 @@ class Web::Repositories::ChecksControllerTest < ActionDispatch::IntegrationTest
 
   test 'test create' do
     sign_in users(:one)
-    repo = repositories(:one)
-    assert_difference 'repo.checks.count' do
-      post repository_checks_path(repo)
-    end
+    repo = repositories(:without_checks)
+    post repository_checks_path(repo)
     check = repo.checks.last
     assert { check.finished? }
-    assert_redirected_to repository_path(repositories(:one))
+    assert_redirected_to repository_path(repo)
   end
 end
