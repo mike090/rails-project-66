@@ -19,7 +19,7 @@ module Web
     }.freeze
 
     def index
-      @repositories = policy_scope(Repository).decorate
+      @repositories = policy_scope(Repository).order(created_at: :desc).decorate
       @repository_actions = REPOSITORY_ACTIONS.slice :show, :update, :check
     end
 
