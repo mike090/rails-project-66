@@ -21,10 +21,10 @@ class GithubAdapter
     def set_repo_hook(repo_id, payload_url)
       repo = Repository.find repo_id
       octokit_client = Octokit::Client.new access_token: repo.user.token
-      return if octokit_client.hooks(github_repo_id).any? { |hook| hook.config.url == payload_url }
+      return if octokit_client.hooks(repo.github_id).any? { |hook| hook.config.url == payload_url }
 
       octokit_client.create_hook(
-        github_repo_id,
+        repo.github_id,
         'web',
         {
           url: payload_url,
