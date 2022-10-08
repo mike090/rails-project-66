@@ -11,5 +11,9 @@ class AdapterStub
     end
 
     def set_repo_hook(*args); end
+
+    def repo_languages(*_args)
+      %w[Ruby JavaScript]
+    end
   end
 end
