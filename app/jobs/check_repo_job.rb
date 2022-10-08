@@ -10,6 +10,6 @@ class CheckRepoJob < ApplicationJob
     ReportMailer.repository_check_report(check).deliver_later unless check.passed
   rescue StandardError => e
     Rails.logger.error "Repository check id: #{check_id} failed! Error: #{e.class} - #{e.message}"
-    ReportMailer.repository_check_report(check).deliver_later
+    ReportMailer.repository_check_report(check).deliver_later if check
   end
 end

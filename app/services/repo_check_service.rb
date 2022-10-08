@@ -14,8 +14,10 @@ class RepoCheckService
       check.attributes = update_values if update_values
       check.complete!
     rescue StandardError => e
-      check.result = "#{e.class}: #{e.message}"
-      check.fail!
+      if check
+        check.result = "#{e.class}: #{e.message}"
+        check.fail!
+      end
       raise e
     end
   end
