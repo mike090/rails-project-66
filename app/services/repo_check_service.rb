@@ -25,7 +25,7 @@ class RepoCheckService
   def check_repo(repo)
     languages = @remote_service.repo_languages(repo.github_id) & CodeChecker.languages
 
-    clone_repository(repo.clone_url) do |git|
+    process_repository(repo.clone_url) do |git|
       clone_path = git.dir.path
       check_results = languages.to_h do |language|
         check_result = CodeChecker.check(clone_path, language)
@@ -43,15 +43,13 @@ class RepoCheckService
     end
   end
 
-  def clone_repository(clone_url)
+  def process_repository(clone_url)
     clone_path = Dir.mktmpdir
     git = Git.clone clone_url, clone_path
     if block_given?
       result = yield git
       FileUtils.remove_entry clone_path
       result
-    else
-      git
     end
   rescue StandardError
     FileUtils.remove_entry clone_path
