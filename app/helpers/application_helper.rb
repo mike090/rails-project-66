@@ -22,14 +22,6 @@ module ApplicationHelper
     back: :get
   }.freeze
 
-  def icon_link_class(disabled: false)
-    disabled ? "#{ICON_LINK_CLASS} disabled" : ICON_LINK_CLASS
-  end
-
-  def button_link_class(disabled: false)
-    disabled ? "#{BUTTON_LINK_CLASS} disabled" : BUTTON_LINK_CLASS
-  end
-
   def http_method_for(action)
     ACTIONS_HTTP_METODS[action]
   end
@@ -45,7 +37,7 @@ module ApplicationHelper
 
   def icon_action_link(action, **link_options)
     hint = t(action)
-    link_class = icon_link_class disabled: link_options.delete(:disabled)
+    link_class = class_names ICON_LINK_CLASS, { disabled: link_options.delete(:disabled) }
     path = url_for link_options
 
     content_tag :span, title: hint do
@@ -57,7 +49,7 @@ module ApplicationHelper
 
   def button_action_link(action, **link_options)
     caption = t(action)
-    link_class = button_link_class disabled: link_options.delete(:disabled)
+    link_class = class_names BUTTON_LINK_CLASS, { disabled: link_options.delete(:disabled) }
     path = url_for link_options
 
     link_to path, class: link_class, method: http_method_for(action) do

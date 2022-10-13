@@ -12,7 +12,7 @@ class Web::Repositories::ChecksControllerTest < ActionDispatch::IntegrationTest
     sign_in users(:one)
     repo = repositories(:without_checks)
     post repository_checks_path(repo)
-    check = repo.checks.last
+    check = repo.checks.first
     assert { check.finished? }
     assert_redirected_to repository_path(repo)
   end

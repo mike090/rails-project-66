@@ -7,7 +7,7 @@ class GithubAdapter
     end
 
     def user_repos_list(user_token)
-      Octokit::Client.new(access_token: user_token).repos auto_paginate: true
+      Octokit::Client.new(access_token: user_token, auto_paginate: true).repos
     end
 
     def clone_url(github_id)

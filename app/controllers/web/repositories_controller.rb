@@ -84,7 +84,7 @@ module Web
     end
 
     def user_repos_list
-      ApplicationContainer['remote_service'].user_repos_list(current_user.token)
+      ApplicationContainer['remote_repositories_service'].user_repos_list(current_user.token)
     end
   end
 end

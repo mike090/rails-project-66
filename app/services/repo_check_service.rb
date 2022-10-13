@@ -1,17 +1,16 @@
 # frozen_string_literal: true
 
 class RepoCheckService
-  def initialize(remote_service)
-    @remote_service = remote_service
+  def initialize(remote_repositories_service)
+    @remote_repositories_service = remote_repositories_service
   end
 
   def call(check_id)
     check = Repository::Check.find check_id
-    return unless check.checking?
+    check.start_checking!
 
     begin
-      update_values = check_repo check.repository
-      check.attributes = update_values if update_values
+      check.attributes = check_repo check.repository
       check.complete!
     rescue StandardError => e
       if check
@@ -25,9 +24,12 @@ class RepoCheckService
   private
 
   def check_repo(repo)
-    languages = @remote_service.repo_languages(repo.github_id) & CodeChecker.languages
+    languages = @remote_repositories_service.repo_languages(repo.github_id) & CodeChecker.languages
 
-    process_repository(repo.clone_url) do |git|
+    clone_path = Dir.mktmpdir
+    begin
+      clone_url = repo.clone_url || @remote_repositories_service.clone_url(repo.github_id)
+      git = Git.clone clone_url, clone_path
       clone_path = git.dir.path
       check_results = languages.to_h do |language|
         check_result = CodeChecker.check(clone_path, language)
@@ -42,18 +44,8 @@ class RepoCheckService
         result: check_results,
         passed: check_results.all? { |_language, result| result['status'] == 'check_passed' }
       }
-    end
-  end
-
-  def process_repository(clone_url)
-    clone_path = Dir.mktmpdir
-    git = Git.clone clone_url, clone_path
-    if block_given?
-      result = yield git
+    ensure
       FileUtils.remove_entry clone_path
-      result
     end
-  rescue StandardError
-    FileUtils.remove_entry clone_path
   end
 end
