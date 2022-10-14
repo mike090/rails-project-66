@@ -3,7 +3,7 @@
 one:
   commit: MyString
   repository: one
-  aasm_state: success
+  aasm_state: finished
   result:
     'Ruby':
       'status': 'errors_found'
